@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!-- test하면서 name 다 바뀌었음. 작동x -->
 	<h3> 회원가입 페이지 </h3>
 	<form action="/jspWeb/signup" method="get">
 		<!-- 폼태그 : 전송기능 action="경로" method="" -->
