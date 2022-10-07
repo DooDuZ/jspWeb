@@ -30,21 +30,76 @@ public class MemberDao extends Dao{
 	}
 	
 	// 2. 로그인
-	public boolean login(String ID, String PW) {
-		String sql = "select * from member where mid = ? and mpw = ? ;";
+	public int login(String ID, String PW) {
+		String sql = "select * from member where mid = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, ID);
-			ps.setString(2, PW);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				System.out.println("메롱");
-				return true;
+				sql = "select * from member where mid = ? and mpw = ? ;";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, ID);
+				ps.setString(2, PW);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					return 1;
+				}else {
+					return 2;
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("로그인DB에러 " + e);
+			return 3;
+		}
+		return 0;
+	}
+	
+	// ID 찾기
+	public String findID(String mname, String mmail) {
+		String sql = "select * from member where mname = ? and memail = ? ;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mname);
+			ps.setString(2, mmail);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getString(2);
+			}
+		} catch (Exception e) {
+			System.out.println("ID찾기 DB오류" + e);
+		}
+		return null;
+	}
+	
+	// 비밀번호 찾기
+	public boolean findPW(String mid, String memail) {
+		String sql = " select * from member where mid = ? and memail = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			ps.setString(2, memail);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("pw찾기 db오류" + e);
 		}
 		return false;
+	}
+	
+	// 임시 비밀번호 등록
+	public void updatePW(String mid, String rand) {
+		String sql = "update member set mpw = ? where mid = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, rand);
+			ps.setString(2, mid);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("임시비밀번호 등록 오류" + e);
+		}
 	}
 	
 }

@@ -1,6 +1,5 @@
    
    //카카오 우편 api
-   alert("등록성공!!!");
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {

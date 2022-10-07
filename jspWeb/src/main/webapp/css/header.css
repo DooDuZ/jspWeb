@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'RixInooAriDuriR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+*{
+	box-sizing: border-box; margin : 0; padding : 0; list-style: none;
+	font-family : '맑은 고딕';
+}
+a{color : black; text-decoration: none;}
+a hover{color : gray;}
+
+.webbox{
+	width : 1200px;
+	margin : 0 auto;
+}
+/* 상단 헤더 */
+.hd_top{
+	display : flex;
+	justify-content: space-between;
+	margin : 10px 0px 20px 0px;
+}
+
+.hd_sub{
+	display : flex;
+	font-size : 12px;
+}
+
+.hd_sub li{
+	margin-left: 20px;	
+}
+
+.hd_title a{
+	font-family: "RixInooAriDuriR";
+	font-size : 35px;
+}
+/* 상단 헤더 */
+
+/* 하단 메뉴 */
+
+.hd_menu{display : flex; justify-content: space-between;}
+
+.searchbox input{border:none;}
+.searchbox span{border-bottom : solid 2px black; margin : 0 20px 0 150px;}
+.fa-search, .fa-shopping-cart{ font-size : 20px;}
+
+.hd_menu li:nth-child(1) a{color : red; font-weight : bold;}
+
+/* 하단 메뉴 */

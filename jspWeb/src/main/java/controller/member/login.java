@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.dao.MemberDao;
 
 
-@WebServlet("/member/logIn")
+@WebServlet("/member/login")
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,22 +22,29 @@ public class login extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// ------------------- ajax --------------------- //
+		String mid = request.getParameter("mid");
+		String mpassword = request.getParameter("mpassword");
+		
+		int result = MemberDao.getInstance().login(mid, mpassword);
+		response.getWriter().print(result);
+		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ID = request.getParameter("ID");
-		String PW = request.getParameter("PW");
-		System.out.println("뭔데");
-		boolean result = MemberDao.getInstance().login(ID, PW);
-		System.out.println(result);
-		if(result) {
-			System.out.println("로그인 성공");
-			response.sendRedirect("http://localhost:8080/jspWeb/index.jsp");
-		}else {
-			System.out.println("로그인 실패");
-			response.sendRedirect("hhttp://localhost:8080/jspWeb/member/login.jsp");
-		}
+		
+		//form 에서 사용
+		
+		/*
+		 * String ID = request.getParameter("mid"); String PW =
+		 * request.getParameter("mpassword"); boolean result =
+		 * MemberDao.getInstance().login(ID, PW); if(result) {
+		 * System.out.println("로그인 성공");
+		 * response.sendRedirect("http://localhost:8080/jspWeb/index.jsp"); }else {
+		 * System.out.println("로그인 실패");
+		 * response.sendRedirect("http://localhost:8080/jspWeb/member/login.jsp"); }
+		 */
 	}
 
 }
