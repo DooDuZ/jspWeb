@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.util.ArrayList;
+
 import model.dto.MemberDto;
 
 public class MemberDao extends Dao{
@@ -102,4 +104,71 @@ public class MemberDao extends Dao{
 		}
 	}
 	
+	// getinfo
+	public MemberDto getInfo(String mid) {
+		MemberDto dto = null;
+		String sql = "select * from member where mid = ? ";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new MemberDto();
+				dto.setMno(rs.getInt(1));
+				dto.setMid(rs.getString(2));
+				dto.setMname(rs.getString(4));
+				dto.setMphone(rs.getString(5));
+				dto.setMemail(rs.getString(6));
+				dto.setMaddr(rs.getString(7));
+				dto.setMdate(rs.getString(8));
+				dto.setMpoint(rs.getInt(9));
+			}
+			return dto;
+		} catch (Exception e) {
+			System.out.println("getInfo DB오류" + e);
+		}
+		return dto;
+	}
+	public ArrayList<MemberDto> getInfoList() {
+		ArrayList<MemberDto> list = new ArrayList<>();
+		String sql = "select * from member";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				MemberDto dto = new MemberDto();
+				dto.setMno(rs.getInt(1));
+				dto.setMid(rs.getString(2));
+				dto.setMname(rs.getString(4));
+				dto.setMphone(rs.getString(5));
+				dto.setMemail(rs.getString(6));
+				dto.setMaddr(rs.getString(7));
+				dto.setMdate(rs.getString(8));
+				dto.setMpoint(rs.getInt(9));
+				list.add(dto);
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("getInfo DB오류" + e);
+		}
+		return list;
+	}
+	
+	public boolean mDelete(String mid, String mpassword) {
+		System.out.println(mid);
+		System.out.println(mpassword);
+		String sql = "delete from member where mid = ? and mpw = ? ";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			ps.setString(2, mpassword);
+			int count = ps.executeUpdate();
+			if(count==1) {
+				return true;
+			}			
+		} catch (Exception e) {
+			System.out.println("회원삭제DB 오류" + e);
+		}
+		return false;
+	}
 }

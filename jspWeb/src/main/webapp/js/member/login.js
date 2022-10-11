@@ -5,9 +5,6 @@
  // HTML과 서블릿 통신
  
  // html 입력된 데이터 가져오기 [ dom ]
- 
-
- 
 
 
 function clickBtn(){
@@ -25,6 +22,7 @@ function clickBtn(){
 		// success : function(매개변수아무거나){}
 		
 		//ajax의 기본 통신 : get
+	// async : 동기화 관련 명령어
 	$.ajax({
 		url : "/jspWeb/member/login" , 
 		data : {"mid" : mid, "mpassword" : mpassword},
@@ -46,7 +44,7 @@ function clickBtn(){
 }
 
 
- 
+
  
  
  

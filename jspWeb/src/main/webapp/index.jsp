@@ -9,7 +9,7 @@
 <body>
 	<%@ include file="header.jsp" %> <!-- file="jsp파일 주소" -->
 	
-	<img src="img/s아가댕" width="100%">
+	<img src="img/s아가댕.jpg" width="100%">
 		
 	<div class="webbox">
 		<h3>메인페이지</h3>

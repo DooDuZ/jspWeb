@@ -24,10 +24,23 @@
 				</span>
 			</div>
 			<div class="menu_top">
+			
+				<!-- 세션 호출 [ JSP 방식 = 템플릿마다 다름 ( JSP vs react ) -->
+				
+				<% // JSP 스크립트 태그(태그 안에 java문법 작성 가능)
+					// jsp 세션 객체 제공
+					String loginID = (String) session.getAttribute("mid");
+				%>
+			
 				<ul class="hd_sub">
+				<% if(loginID==null){	%>
 					<li><a href="/jspWeb/member/login.jsp">로그인</a></li>
 					<li><a href="/jspWeb/member/signup.jsp">회원가입</a></li>
-					<li><a href="#">마이쇼핑</a></li>
+				<%	}else{	%>
+					<li><%= loginID %></li>
+					<li><a href="/jspWeb/member/logout.jsp">로그아웃</a></li>
+				<%	} %>					
+					<li><a href="/jspWeb/member/info.jsp">마이쇼핑</a></li>
 					<li><a href="#">고객센터</a></li>
 				</ul>
 			</div>

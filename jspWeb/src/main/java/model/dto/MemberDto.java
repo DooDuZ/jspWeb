@@ -16,7 +16,7 @@ public class MemberDto {
 	private String memail;
 	private String maddr;
 	private String mdate;
-	private String mpoint;
+	private int mpoint;
 	
 	public MemberDto() {
 		// TODO Auto-generated constructor stub
@@ -37,7 +37,7 @@ public class MemberDto {
 
 
 	public MemberDto(int mno, String mid, String mpw, String mname, String mphone, String memail, String maddr,
-			String mdate, String mpoint) {
+			String mdate, int mpoint) {
 		super();
 		this.mno = mno;
 		this.mid = mid;
@@ -114,11 +114,11 @@ public class MemberDto {
 		this.mdate = mdate;
 	}
 
-	public String getMpoint() {
+	public int getMpoint() {
 		return mpoint;
 	}
 
-	public void setMpoint(String mpoint) {
+	public void setMpoint(int mpoint) {
 		this.mpoint = mpoint;
 	}
 
