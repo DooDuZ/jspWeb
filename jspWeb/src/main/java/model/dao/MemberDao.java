@@ -171,4 +171,49 @@ public class MemberDao extends Dao{
 		}
 		return false;
 	}
+	// id중복검사
+	public boolean checkID(String mid) {
+		String sql = "select * from member where mid = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			rs = ps.executeQuery();
+			if(!rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("ID중복검사 오류"+e);
+		}
+		return false;
+	}
+	
+	//email중복 체크
+	public boolean checkEmail(String memail) {
+		String sql = "select * from member where memail = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, memail);
+			rs = ps.executeQuery();
+			if(!rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("ID중복검사 오류"+e);
+		}
+		return false;
+	}
+	//update name
+	public boolean updateName(String mid, String mname) {
+		String sql = "update member set mname = ? where mid = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mname);
+			ps.setString(2, mid);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("이름변경 DB오류" + e);
+		}
+		return false;
+	}
 }

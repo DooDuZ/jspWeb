@@ -55,8 +55,6 @@ public class signup extends HttpServlet {
 		
 			// 입력받은 변수 4개 DAO로 이동 [ 변수 4개 vs dto1개 vs 컬렉션프레임워크 vs JSON ]
 		MemberDto dto = new MemberDto(ID, PW, Name, Phone, Email, Adress);
-			// 2. 테스트
-		System.out.println(dto.toString());
 			// 3. Dao
 		boolean result ;
 		if(PW.equals(PWs)) {
@@ -89,22 +87,10 @@ public class signup extends HttpServlet {
 		String address2 = request.getParameter("address2");
 		String address3 = request.getParameter("address3");
 		String address4 = request.getParameter("address4");
-		
-		System.out.println(address1);
-		System.out.println(address2);
-		System.out.println(address3);
-		System.out.println(address4);
 		String Address = address1 +","+ address2 + "," + address3 +"," + address4;
 		MemberDto dto = new MemberDto(ID, PW, Name, Phone, Email, Address);
 		
-		System.out.println(dto.toString());
-		
-		boolean result;
-		if(PW.equals(PWs)) {
-			result = MemberDao.getInstance().signup(dto);
-		}else {
-			result = false;
-		}
+		boolean result = MemberDao.getInstance().signup(dto);
 		if(result) {
 			System.out.println("회원가입 성공");
 			// response.sendRedirect("URL") --> 페이지 응답
@@ -113,5 +99,4 @@ public class signup extends HttpServlet {
 			System.out.println("회원가입 실패");
 		}
 	}
-
 }
