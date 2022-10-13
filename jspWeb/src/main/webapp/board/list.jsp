@@ -15,7 +15,7 @@
 	
 	<div class="webbox">
 		<a href="write.jsp">글쓰기</a>
-		<table>
+		<%-- <table>
 			<tr>
 				<th>글번호</th><th>글제목</th><th>작성자</th><th>등록일</th><th>조회수</th>
 			</tr>
@@ -34,7 +34,7 @@
 				<%	
 					}				
 				%>				
-		</table>
+		</table> --%>
 		
 		<table id="boardlist">
 			

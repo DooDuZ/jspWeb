@@ -16,14 +16,14 @@
 		<!--  
 		<form action="/jspWeb/board/write" method="post">
 			제목 : <input type="text" name="btitle"> <br>
-			내용 : <input type="text" name="bcontent">	
+			내용 : <input type="text" name="bcontent">
 			<input type="submit" value="쓰기">
 		</form>
 		 -->
 	 	제목 : <input type="text" id="btitle"> <br>
 		내용 : <input type="text" id="bcontent">
 		파일 : <input type = "file">
-		<button onclick="bwrite()">글 등록</button>		 
+		<button onclick="bwrite()">글 등록</button>
 	</div>
 	
 	

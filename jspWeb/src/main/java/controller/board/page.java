@@ -22,20 +22,15 @@ public class page extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String no = request.getParameter("bno");
-		int bno = Integer.parseInt(no);
-		System.out.println(bno);
-		writeDto dto = WriteDao.getInstance().getContent(bno);
+		int bno = (Integer)request.getSession().getAttribute("bno");
 		
-		System.out.println(dto.getBtitle());
-		System.out.println(dto.getBcontent());
+		writeDto dto = WriteDao.getInstance().getContent(bno);
 		
 		JSONObject object = new JSONObject();
 		object.put("btitle", dto.getBtitle());
 		object.put("bcontent", dto.getBcontent());
 		
 		response.setCharacterEncoding("UTF-8");
-		response.sendRedirect("/jspWeb/board/page.jsp");
 		response.getWriter().print(object);
 	}
 }

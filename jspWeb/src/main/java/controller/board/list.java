@@ -35,11 +35,11 @@ public class list extends HttpServlet {
 		
 		for(int i = 0 ; i<list.size() ; i++) {
 			JSONObject object = new JSONObject();
-			object.put("bno", list.get(i).getbNo());
+			object.put("bno", list.get(i).getBno());
 			object.put("btitle", list.get(i).getBtitle());
-			object.put("bwriter", list.get(i).getBwriter());
 			object.put("bdate", list.get(i).getBdate());
 			object.put("bview", list.get(i).getBview());
+			object.put("mno", list.get(i).getMno());
 			
 			array.add(object);
 		}

@@ -41,7 +41,7 @@
 					<li><a href="/jspWeb/member/logout.jsp">로그아웃</a></li>
 				<%	} %>					
 					<li><a href="/jspWeb/member/info.jsp">마이쇼핑</a></li>
-					<li><a href="#">고객센터</a></li>
+					<li><a href="board/list.jsp">고객센터</a></li>
 				</ul>
 			</div>
 		</div>

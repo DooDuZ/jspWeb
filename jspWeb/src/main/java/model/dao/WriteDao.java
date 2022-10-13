@@ -15,15 +15,22 @@ public class WriteDao extends Dao {
 	}
 	
 	public boolean addContent(String btitle, String bcontent, String bwriter) {
-		String sql = "insert into board values( null, ?, ?, ?, now(), 0)";
-		if(bwriter==null) {
-			return false;
-		}
+		String sql = "select mno from member where mid = ?";
 		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, bwriter);
+			rs = ps.executeQuery();
+			int mno = 0;
+			if(rs.next()) {
+				mno = rs.getInt(1);
+			}else {			
+				return false;
+			}
+			sql = "insert into board values( null, ? , ? , now(), 0, null, 1, ?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, btitle);
 			ps.setString(2, bcontent);
-			ps.setString(3, bwriter);
+			ps.setInt(3, mno);
 			ps.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -40,7 +47,7 @@ public class WriteDao extends Dao {
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				writeDto dto = new writeDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+				writeDto dto = new writeDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), null);
 				list.add(dto);
 			}
 			return list;
@@ -50,6 +57,7 @@ public class WriteDao extends Dao {
 		return list;
 	}
 	
+	// 글 보기
 	public writeDto getContent(int bno) {
 		writeDto dto = new writeDto();
 		String sql = "select * from board where bno = ?";
