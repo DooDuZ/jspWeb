@@ -21,7 +21,7 @@ function getMember(){
 			document.querySelector("#sample4_postcode").value = member.maddr.split(',')[0];
 			document.querySelector("#sample4_roadAddress").value = member.maddr.split(',')[1];
 			document.querySelector("#sample4_jibunAddress").value = member.maddr.split(',')[2];
-			document.querySelector("#sample4_detailAddress").value = member.maddr.split(',')[3];			
+			document.querySelector("#sample4_detailAddress").value = member.maddr.split(',')[3];
 			// getMemberList(); 잠시 미사용
 		}
 	})

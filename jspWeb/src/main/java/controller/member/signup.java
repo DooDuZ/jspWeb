@@ -67,8 +67,6 @@ public class signup extends HttpServlet {
 		}else {
 			System.out.println("회원가입 실패");
 		}
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
