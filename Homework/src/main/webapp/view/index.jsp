@@ -36,11 +36,15 @@
 	</div>
 	<div id="commentwrap">
 		<div id="inputcomment">
-			
+			<h3>댓글</h3>
+			<input type="text" id="comWriter">
+			<input type="text" id="comPw">
+			<input type="text" id="comText">
+			<button onclick="addComment()">댓글 등록</button>
 		</div>
 		<div>
-			<table id="commentbox">
-			</table>
+			<div id="commentbox">
+			</div>
 		</div>
 	</div>
 	<script src="../js/index.js"></script>

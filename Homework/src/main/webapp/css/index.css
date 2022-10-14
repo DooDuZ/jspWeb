@@ -16,7 +16,7 @@ section ul{margin-top : 20px;}
 		border : 1px solid black;
 }
 
-#commentbox td{width : 100px; height : 30px; margin : 10px; text-align: center;}
+#commentbox li{display : flex; justify-content: space-around;}
 
 #commentwrap{width : 800px; height : 400px ; margin : 0 auto;
 		border : 1px solid black;}

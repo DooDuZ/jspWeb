@@ -144,4 +144,32 @@ public class BoardDao extends Dao{
 		}		
 		return false;
 	}
+	
+	public commentDto extendsComment(commentDto dto) {
+		int depth;
+		
+		String sql = "select * from comment where cNo=?";
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, dto.getcNo());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				depth = rs.getInt(7) + 1;
+			}else {
+				depth = 1;
+			}			
+			sql = "insert into comment values(null, ?, ? ,? , now(), ?, ?, ?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, dto.getcWriter());
+			ps.setString(2, dto.getcPassword());
+			ps.setString(3, dto.getcContent());
+			ps.setInt(4, dto.getbNo());
+			ps.setInt(5, depth);
+			ps.setInt(6, dto.getcNo());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("대댓글 등록 DB오류"+e);
+		}		
+		return null;
+	}
 }

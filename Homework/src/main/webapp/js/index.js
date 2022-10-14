@@ -104,15 +104,16 @@ function viewComment(i){
 							내용 : <input type="text" id="comText">
 							<button onclick="addComment(${i})">댓글 등록</button>`;
 			document.getElementById('inputcomment').innerHTML = input;
-			let output = `<tr><th>댓글 번호</th><th>작성자</th><th>내용</th><th>작성일</th><th>비고</th></tr>`; 
+			let output = `<ul><li><div>댓글 번호</div><div>작성자</div><div>내용</div><div>작성일</div><div>비고</div></li></ul>`; 
 			let list = JSON.parse(result);
 			for(let i = 0 ; i<list.length ; i++){
-				output += `<tr id="row_${list[i].cNo}"><td>${i+1}</td>
-							<td onclick="commentextends(${list[i].cNo}, ${bNo})">${list[i].cWriter}</td>
-							<td>${list[i].cContent}</td>
-							<td>${list[i].cDate}</td>
-							<td>비밀번호 : <input type="password" id="del_${list[i].cNo}"><button onclick="delComment(${list[i].cNo},${bNo})">삭제</button></td>
-							</tr>`
+				output += `<ul id="row_${list[i].cNo}"><li>
+							<div>${i+1}</div>
+							<div onclick="commentextends(${list[i].cNo}, ${bNo})">${list[i].cWriter}</div>
+							<div>${list[i].cContent}</div>
+							<div>${list[i].cDate}</div>
+							<div>비밀번호 : <input type="password" id="del_${list[i].cNo}"><button onclick="delComment(${list[i].cNo},${bNo})">삭제</button></div>
+							</li></ul>`
 			}			
 			commentbox.innerHTML = output;
 		}
@@ -155,11 +156,28 @@ function delComment(i, bNo){
 
 function commentextends(i, bNo){
 	let extendsrow = document.querySelector(`#row_${i}`);
-	console.log(extendsrow)
-	extendsrow.innerHTML += `</tr><tr id="row_${i}_child">
-					<td>작성자<input type="text"></td>
-					<td>비밀번호<input type="password"></td>
-					<td>내용<input type="text"></td>
-					<td></td><td></td>`;
+	extendsrow.innerHTML += `<li id="row_${i}_child">
+					<div>작성자<input type="text" class="exadd"></div>
+					<div>비밀번호<input type="password" class="exadd"></div>
+					<div>내용<input type="text" class="exadd"></div>
+					<div><button onclick="addEx_comment(${i}, ${bNo})">등록</button></div>
+					</li>`;
 }
 
+function addEx_comment(cNo, bNo){
+	let inputbox = document.querySelectorAll('.exadd');
+	let object = {'cWriter' : inputbox[0].value,
+					'cPassword' : inputbox[1].value,
+					'cContent' : inputbox[2].value,
+					'cNo' : cNo,
+					'bNo' : bNo
+				}
+	
+	$.ajax({
+		url : '/Homework/board/extendsComment',
+		data : object,
+		success : (result)=>{
+			
+		}
+	})
+}
