@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+
+*{box-sizing: border-box; padding : 0 ; margin : 0 ; }
+a{ text-decoration: none; color: black;}
+a hover{ color: gray; }
+
+textarea{ width: 500px; height : 300px; resize: none; }
+
+#conBox{ border : 1px solid black; border-collapse: collapse;}
+#conBox td{width : 100px; height:50px; border : 1px solid black; border-collapse: collapse;}

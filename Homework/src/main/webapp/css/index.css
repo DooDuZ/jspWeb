@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+*{
+	box-sizing: border-box; margin : 0; padding : 0; list-style: none;
+	font-family : '맑은 고딕';
+}
+a{color : black; text-decoration: none;}
+a hover{color : gray;}
+
+#boardList span{margin : 20px 40px; }
+
+section{display : flex; justify-content: center; align-items: center;}
+section ul{margin-top : 20px;}
+
+#contentbox{ width : 800px; height : 400px ; margin : 0 auto;
+		border : 1px solid black;
+}
+
+#commentbox td{width : 100px; height : 30px; margin : 10px; text-align: center;}
+
+#commentwrap{width : 800px; height : 400px ; margin : 0 auto;
+		border : 1px solid black;}

@@ -23,12 +23,21 @@ public class page extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bno = (Integer)request.getSession().getAttribute("bno");
-		
+		String mid = (String) request.getSession().getAttribute("mid");
 		writeDto dto = WriteDao.getInstance().getContent(bno);
 		
 		JSONObject object = new JSONObject();
+		object.put("mid", mid);
+		object.put("bNo", bno);
 		object.put("btitle", dto.getBtitle());
 		object.put("bcontent", dto.getBcontent());
+		object.put("bfile", dto.getBfile());
+		
+		if( mid!=null && mid.equals(dto.getMid())) {
+			object.put("checkUser", true);
+		}else {
+			object.put("checkUser", false);
+		}
 		
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().print(object);

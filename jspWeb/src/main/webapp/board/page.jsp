@@ -24,9 +24,14 @@
 	</div> --%>
 	
 	<div class="webbox">
+		<h3>글 조회</h3>
 		<div id = "contentbox">
 			<h3 id = "titlebox"> </h3>
-			<div id= "textbox"> </div>
+			<div id = "bnobox" ></div>
+			<div id = "idbox"></div>
+			<div id = "textbox"> </div>
+			<div id = "bfile">첨부파일</div>
+			<div id = "delbox"></div>
 		</div>	
 	</div>
 	
