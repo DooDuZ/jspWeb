@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.dao.BoardDao;
-import board.model.dto.commentDto;
-
 
 @WebServlet("/board/addComment")
 public class addComment extends HttpServlet {
@@ -29,7 +27,7 @@ public class addComment extends HttpServlet {
 		
 		boolean result = BoardDao.getInstance().addComment(comWriter,comPw,comText,bNo);
 		
-		response.getWriter().print(result);		
+		response.getWriter().print(result);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -16,10 +16,10 @@ function addCon(){
 		data : {"title" : title, "content" : content , "writer" : writer , "password" : password},
 		success : (result)=>{
 			if(result==='true'){
-				alert('글 등록 성공')
+				alert('글 등록 성공');
 				location.href = "/Homework/view/index.jsp";
 			}else{
-				alert('글 등록 실패')
+				alert('글 등록 실패');
 			}
 		}
 	})	
@@ -107,6 +107,48 @@ function viewComment(i){
 			let output = `<ul><li><div>댓글 번호</div><div>작성자</div><div>내용</div><div>작성일</div><div>비고</div></li></ul>`;
 			let list = JSON.parse(result);
 			
+			let checkPrint = [];				//object 사용 여부 체크 배열
+			let extendslist = [];				//출력 전 정렬용 배열
+			for(let i = 0; i<list.length ;i++){
+				checkPrint[i] = false;			//인덱스에 맞춰 사용여부 저장
+			}
+			
+			// 지역 함수...? 가능한가? 
+			function checkSelf(index){
+				for(let i = 0 ; i<list.length ; i++){
+					if(!checkPrint[i] && index==list[i].refer){
+						extendslist.push(list[i]);
+						console.log(JSON.parse(JSON.stringify(extendslist)));
+						checkPrint[i] = true;
+						checkSelf(list[i].cNo);
+					}
+				}
+			}
+			
+			for(let i = 0; i<list.length ; i++){
+				if(!checkPrint[i]){
+					extendslist.push(list[i]);
+					checkPrint[i] = true;
+					checkSelf(list[i].cNo);
+				}
+			}
+			
+			
+			/*
+				[ 순서도 ]
+					
+					1. 첫번째 댓글 등록
+					2. 해당 댓글을 참조하는 댓글 검색
+					3. 검색 최상단 댓글 등록
+					4. 다시 참조댓글 검색
+					5. 다시 등록
+					6. 반복
+					7. 참조댓글 없는경우 break
+			
+			*/
+			
+			
+			
 			/*
 			
 			
@@ -120,7 +162,15 @@ function viewComment(i){
 				if(!checkPrint[i]){				// 가져온 리스트에서 사용되지 않은 object이면
 					extendslist.push(list[i]);	// 정렬용 배열에 push
 					checkPrint[i] = true;		// 사용했다고 체크배열에 표시
-					let referExtends = [];		// 같은 값을 참조하는 object를 저장할 배열
+					
+					if(checkSelf(i)){
+						let referExtends = [];		// 같은 값을 참조하는 object를 저장할 배열
+						
+					}
+						
+					
+					
+					
 					for(let j = 0 ; j<list.length; j++){	// 전체검사... 비효율적이지만 일단 동작부터 시키자
 						if(list[j].refer === list[i].cNo){	// 전체검사에서 나온 참조값이 위에서 저장한 i번째 인덱스의 코멘트넘버와 같으면
 							referExtends.push(list[j]);		// 같은 값 참조 배열에 push
@@ -141,38 +191,28 @@ function viewComment(i){
 				---- 주석 풀거면 아래 반복문에 list~~ 이부분 바꿔야함
 				
 				
-			*/
-			
-			let extendslist = [];
-			
-			for(let i = 0 ; i<list.length ; i++){		// 저장된 object를 순차적으로 출력
+			*/			
+			for(let i = 0 ; i<extendslist.length ; i++){		// 저장된 object를 순차적으로 출력
 				let blank ='';
-				for(let j = 0 ; j<list[i].depth; j++){
+				for(let j = 0 ; j<extendslist[i].depth; j++){
 					blank += '*';
 				}
-				output += `<ul id="row_${list[i].cNo}"><li>
+				output += `<ul id="row_${extendslist[i].cNo}"><li>
 							<span>${blank}</span>
-							<div>${i+1}</div>
-							<div onclick="commentextends(${list[i].cNo}, ${bNo})">${list[i].cWriter}</div>
-							<div>${list[i].cContent}</div>
-							<div>${list[i].cDate}</div>
-							<div>비밀번호 : <input type="password" id="del_${list[i].cNo}"><button onclick="delComment(${extendslist[i].cNo},${bNo})">삭제</button></div>
-							</li></ul>`
+							<div>${extendslist[i].cNo}</div>
+							<div onclick="commentextends(${extendslist[i].cNo}, ${bNo})">${extendslist[i].cWriter}</div>
+							<div>${extendslist[i].cContent}</div>
+							<div>${extendslist[i].cDate}</div>
+							<div>비밀번호 : <input type="password" id="del_${extendslist[i].cNo}"><button onclick="delComment(${extendslist[i].cNo},${bNo})">삭제</button></div>
+							</li></ul>`;
 			}			
 			commentbox.innerHTML = output;
 		}
 	})
 }
 
-
-function checkSelf(i){
-	$.ajax({
-		url : '/Homework/board/checkSelf',
-		data : {'cNo' : i},
-		success : (result)=>{
-			
-		}		
-	})
+function addExtends(){
+	
 }
 
 
@@ -189,7 +229,7 @@ function addComment(i){
 			}else{
 				alert('댓글 등록 실패');
 			}
-		}	
+		}
 	})	
 }
 
