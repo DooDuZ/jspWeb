@@ -12,11 +12,13 @@ a hover{color : gray;}
 section{display : flex; justify-content: center; align-items: center;}
 section ul{margin-top : 20px;}
 
-#contentbox{ width : 800px; height : 400px ; margin : 0 auto;
+#contentbox{ width : 1000px; height : 400px ; margin : 0 auto;
 		border : 1px solid black;
 }
 
-#commentbox li{display : flex; justify-content: space-around;}
+#commentbox li{display : flex; justify-content: flex-start;}
 
-#commentwrap{width : 800px; height : 400px ; margin : 0 auto;
+#commentbox li div{margin-right : 20px;}
+
+#commentwrap{width : 1000px; height : 400px ; margin : 0 auto;
 		border : 1px solid black;}

@@ -9,7 +9,6 @@
 	<!-- 뷰포트 -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
 	<!-- 폰트어썸 -->
-
 	<link href = "../css/index.css" rel="stylesheet">
 </head>
 <body>

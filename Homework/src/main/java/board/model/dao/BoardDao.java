@@ -101,6 +101,8 @@ public class BoardDao extends Dao{
 				dto.setcContent(rs2.getString(4));
 				dto.setcDate(rs2.getString(5));
 				dto.setbNo(rs2.getInt(6));
+				dto.setDepth(rs2.getInt(7));
+				dto.setRefer(rs2.getInt(8));
 				list.add(dto);
 			}
 			return list;
@@ -112,7 +114,7 @@ public class BoardDao extends Dao{
 	
 	// 댓글 등록
 	public boolean addComment(String comWriter, String comPw, String comText, int bNo) {
-		String sql = "insert into comment values(null, ?,?,?, now(),?,null,null)";
+		String sql = "insert into comment values(null, ?,?,?, now(),?, 1, 0)";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, comWriter);
@@ -145,9 +147,8 @@ public class BoardDao extends Dao{
 		return false;
 	}
 	
-	public commentDto extendsComment(commentDto dto) {
+	public boolean extendsComment(commentDto dto) {
 		int depth;
-		
 		String sql = "select * from comment where cNo=?";
 		try {
 			ps=con.prepareStatement(sql);
@@ -157,7 +158,7 @@ public class BoardDao extends Dao{
 				depth = rs.getInt(7) + 1;
 			}else {
 				depth = 1;
-			}			
+			}
 			sql = "insert into comment values(null, ?, ? ,? , now(), ?, ?, ?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getcWriter());
@@ -167,9 +168,25 @@ public class BoardDao extends Dao{
 			ps.setInt(5, depth);
 			ps.setInt(6, dto.getcNo());
 			ps.executeUpdate();
+			return true;
 		} catch (Exception e) {
 			System.out.println("대댓글 등록 DB오류"+e);
 		}		
-		return null;
+		return false;
+	}
+	
+	public boolean checkSelf(int cNo) {
+		String sql = "select * from comment where refer = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, cNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("참조댓글 확인 db오류");
+		}		
+		return false;
 	}
 }

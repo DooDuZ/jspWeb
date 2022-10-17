@@ -7,6 +7,9 @@ public class commentDto {
     String cContent;
     String cDate;
     int bNo;
+    int depth;
+    int refer;
+    String referName;
     
     public commentDto() {
 		// TODO Auto-generated constructor stub
@@ -32,6 +35,22 @@ public class commentDto {
 		this.cContent = cContent;
 		this.cDate = cDate;
 		this.bNo = bNo;
+	}
+
+
+
+	public commentDto(int cNo, String cWriter, String cPassword, String cContent, String cDate, int bNo, int depth,
+			int refer, String referName) {
+		super();
+		this.cNo = cNo;
+		this.cWriter = cWriter;
+		this.cPassword = cPassword;
+		this.cContent = cContent;
+		this.cDate = cDate;
+		this.bNo = bNo;
+		this.depth = depth;
+		this.refer = refer;
+		this.referName = referName;
 	}
 
 
@@ -106,9 +125,49 @@ public class commentDto {
 		this.bNo = bNo;
 	}
 
+	
+	
+	public int getDepth() {
+		return depth;
+	}
+
+
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+
+
+	public int getRefer() {
+		return refer;
+	}
+
+
+
+	public void setRefer(int refer) {
+		this.refer = refer;
+	}
+
+
+
+	public String getReferName() {
+		return referName;
+	}
+
+
+
+	public void setReferName(String referName) {
+		this.referName = referName;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "commentDto [cNo=" + cNo + ", cWriter=" + cWriter + ", cPassword=" + cPassword + ", cContent=" + cContent
-				+ ", cDate=" + cDate + ", bNo=" + bNo + "]";
-	}	
+				+ ", cDate=" + cDate + ", bNo=" + bNo + ", depth=" + depth + ", refer=" + refer + ", referName="
+				+ referName + "]";
+	}
+	
 }

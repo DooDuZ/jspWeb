@@ -40,6 +40,8 @@ public class viewComment extends HttpServlet {
 			object.put("cContent", list.get(i).getcContent());
 			object.put("cDate", list.get(i).getcDate());
 			object.put("bNo", list.get(i).getbNo());
+			object.put("depth", list.get(i).getDepth());
+			object.put("refer", list.get(i).getRefer());
 			array.add(object);
 		}
 		
