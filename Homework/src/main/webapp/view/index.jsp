@@ -21,7 +21,7 @@
 			<div>내용 : <textarea id="cContent"></textarea></div>
 			<div>작성자 : <input type="text" id="cWriter"></div>
 			<div>비밀번호 :  <input type="password" id="cPassword"></div>
-			<div><button onclick="addCon()"> 글 등록 </button>
+			<div><button onclick="addCon()"> 글 등록 </button></div>
 		</div>
 	</div>
 	

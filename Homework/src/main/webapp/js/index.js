@@ -39,18 +39,20 @@ function printboard(page){
 			let boardlist = document.getElementById('boardlist');
 			let board = `<tr><th>글 번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th><th>비고</th></tr>`
 			
+			
+			
 			let displayContent = 3;
-			let totalPage = contentList.length/displayContent;
-			if(contentList.length%displayContent!=0){
+			let totalPage = (contentList.length/displayContent);
+			if((contentList.length % displayContent)!=0){
 				totalPage++;
 			}
 			
 			for(let i = (page-1)*3 ; i<page*3 ; i++){
-				if(i==contentList.length-1){
+				if(i>contentList.length-1){
 					break;
 				}
 				board += `<tr id=${contentList[i].cNo}><td>${contentList[i].cNo}</td>
-						<td onclick="viewContent(${contentList[i].cNo}, ${page})">${contentList[i].Title}</td>
+						<td onclick="viewContent(${contentList[i].cNo})">${contentList[i].Title}</td>
 						<td>${contentList[i].Writer}</td>
 						<td>${contentList[i].Date}</td>
 						<td>${contentList[i].view}</td>
@@ -67,14 +69,17 @@ function printboard(page){
 			
 			let btnbox = document.querySelector('#btnbox');
 			
-			let startPage = Math.floor(page/5)+1;
+			let startPage = Math.floor(page/5)*5+1;
 			let endPage = startPage + 4;
+			if(endPage>totalPage){
+				endPage = totalPage;
+			}
 			
 			for(let i = startPage ; i<=endPage ; i++){
-				if(i>totalPage){
+				btns += `<button onclick="printboard(${i})">${i}</button>`;
+				if(i>=totalPage){
 					break;
 				}
-				btns += `<button onclick="printboard(${i})">${i}</button>`;
 			}
 			
 			if(page>=totalPage){
@@ -113,7 +118,7 @@ function deleteContent(i){
 	})
 }
 
-function viewContent(i, page){
+function viewContent(i){
 	let contitle = document.querySelector('.contitle');
 	let viewer = document.querySelector('.viewer');
 	$.ajax({
@@ -124,7 +129,6 @@ function viewContent(i, page){
 			contitle.innerHTML = data.title;
 			viewer.innerHTML = data.content;
 			viewComment(i);
-			printboard(page);
 		}
 	})	
 }
@@ -157,7 +161,6 @@ function viewComment(i){
 				for(let i = 0 ; i<list.length ; i++){
 					if(!checkPrint[i] && index==list[i].refer){
 						extendslist.push(list[i]);
-						console.log(JSON.parse(JSON.stringify(extendslist)));
 						checkPrint[i] = true;
 						checkSelf(list[i].cNo);
 					}
@@ -171,6 +174,7 @@ function viewComment(i){
 					checkSelf(list[i].cNo);
 				}
 			}
+			console.log(JSON.parse(JSON.stringify(extendslist)));
 			
 			
 			/*
@@ -234,14 +238,15 @@ function viewComment(i){
 				for(let j = 0 ; j<extendslist[i].depth; j++){
 					blank += '*';
 				}
-				output += `<ul id="row_${extendslist[i].cNo}"><li>
+				output += `<ul><li>
 							<span>${blank}</span>
 							<div>${extendslist[i].cNo}</div>
-							<div onclick="commentextends(${extendslist[i].cNo}, ${bNo}, ${extendslist[i].cWriter})">${extendslist[i].cWriter}</div>
+							<div onclick="commentextends(${extendslist[i].cNo}, ${bNo})">${extendslist[i].cWriter}</div>
+							<div></div>
 							<div>${extendslist[i].cContent}</div>
 							<div>${extendslist[i].cDate}</div>
 							<div>비밀번호 : <input type="password" id="del_${extendslist[i].cNo}"><button onclick="delComment(${extendslist[i].cNo},${bNo})">삭제</button></div>
-							</li></ul>`;
+							</li></ul><div id="row_${extendslist[i].cNo}"></div>`;
 			}			
 			commentbox.innerHTML = output;
 		}
@@ -277,26 +282,28 @@ function delComment(i, bNo){
 				viewComment(bNo);
 			}else{
 				alert('삭제 실패');
-			}			
+			}
 		}		
 	})
 }
 
-function commentextends(i, bNo, cWriter){
-	let extendsrow = document.querySelector(`#row_${i}`);
-	extendsrow.innerHTML += `<li id="row_${i}_child">
+
+function commentextends(cNo, bNo){
+	let extendsrow = document.querySelector(`#row_${cNo}`);	
+	let output = `<li id="row_${cNo}_child">
 					<div>작성자<input type="text" class="exadd"></div>
 					<div>비밀번호<input type="password" class="exadd"></div>
 					<div>내용<input type="text" class="exadd"></div>
-					<div><button onclick="addEx_comment(${i}, ${bNo}, ${cWriter})">등록</button></div>
+					<div><button onclick="addEx_comment(${cNo}, ${bNo})">등록</button></div>
 					</li>`;
+	extendsrow.innerHTML = output;
 }
 
-function addEx_comment(cNo, bNo, cWriter){
+function addEx_comment(cNo, bNo){
 	let inputbox = document.querySelectorAll('.exadd');
 	let object = {'cWriter' : inputbox[0].value,
 					'cPassword' : inputbox[1].value,
-					'cContent' : `@${cWriter}`+inputbox[2].value,
+					'cContent' :inputbox[2].value,
 					'cNo' : cNo,
 					'bNo' : bNo
 				}	
@@ -305,9 +312,6 @@ function addEx_comment(cNo, bNo, cWriter){
 		data : object,
 		success : (result)=>{
 			if(result==='true'){
-				inputbox[0].value='';
-				inputbox[1].value='';
-				inputbox[2].value='';
 				viewComment(bNo);
 			}
 		}
