@@ -26,7 +26,9 @@ public class filedown extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String bfile = request.getParameter("bfile");
-		String uploadpath = "C:\\Users\\504\\git\\jspWeb\\jspWeb\\src\\main\\webapp\\upload\\"+bfile;
+		// String uploadpath = "C:\\Users\\504\\git\\jspWeb\\jspWeb\\src\\main\\webapp\\upload\\"+bfile;
+		String uploadpath = request.getSession().getServletContext().getRealPath("/upload/"+bfile);		// getRealPath("업로드할 폴더명")
+		System.out.println(uploadpath);
 		// 해당 경로의 파일을 객체화
 		File file = new File(uploadpath);
 		

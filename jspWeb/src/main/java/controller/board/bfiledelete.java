@@ -11,33 +11,33 @@ import javax.servlet.http.HttpServletResponse;
 import model.dao.WriteDao;
 import model.dto.writeDto;
 
-/**
- * Servlet implementation class checkuser
- */
-@WebServlet("/board/deleteContent")
-public class deleteContent extends HttpServlet {
+@WebServlet("/board/bfiledelete")
+public class bfiledelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public deleteContent() {
+
+    public bfiledelete() {
         super();
-        // TODO Auto-generated constructor stub
     }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		int bno = Integer.parseInt(request.getParameter("bno"));
+		int bno = (Integer) request.getSession().getAttribute("bno");
+		
 		writeDto dto = WriteDao.getInstance().getContent(bno);
-		// DB 데이터 처리
-		boolean result = WriteDao.getInstance().deleteContent(bno);
+		
+		boolean result = WriteDao.getInstance().bfiledelete(bno);
 		if(result) {
-			File file = new File(request.getSession().getServletContext().getRealPath("/upload/"+dto.getBfile()));
+			String deletepath = request.getSession().getServletContext().getRealPath("/upload/"+dto.getBfile());
+			File file = new File(deletepath);
 			if(file.exists()) {
 				file.delete();
 			}
 		}
-		response.getWriter().print(result);		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 
 }

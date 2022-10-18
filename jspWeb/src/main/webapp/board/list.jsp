@@ -36,10 +36,10 @@
 				%>				
 		</table> --%>
 		
-		<table id="boardlist" class="table">
-			
-		
+		<table id="boardlist" class="table">		
 		</table>
+		
+		<div class="pagebox"></div>
 			
 	</div>	
 	

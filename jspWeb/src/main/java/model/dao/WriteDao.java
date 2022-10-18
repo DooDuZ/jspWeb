@@ -41,11 +41,13 @@ public class WriteDao extends Dao {
 	}
 	
 	// 글 출력 
-	public ArrayList<writeDto> getlist() {
+	public ArrayList<writeDto> getlist(int startRow, int listSize) {
 		ArrayList<writeDto> list = new ArrayList<>();
-		String sql = "select * from board";
+		String sql = "select b.*, m.mid from member m, board b where m.mno = b.mno order by b.bdate desc limit ?,?;";
 		try {
 			ps=con.prepareStatement(sql);
+			ps.setInt(1, startRow);
+			ps.setInt(2, listSize);
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				writeDto dto = new writeDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), null);
@@ -73,6 +75,10 @@ public class WriteDao extends Dao {
 				dto.setBfile(rs.getString(6));
 				dto.setMid(rs.getString(9));
 			}
+			sql = "update board set bview = bview+1 where bno=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.executeUpdate();
 			return dto;
 		} catch (Exception e) {
 			System.out.println("글보기db오류"+e);
@@ -92,5 +98,52 @@ public class WriteDao extends Dao {
 			System.out.println("삭제DB오류"+e);
 		}		
 		return false;
+	}
+	
+	public boolean bfiledelete(int bno) {
+		String sql = "update board set bfile = null where bno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("파일수정 DB오류" + e);
+		}		
+		return false;
+	}
+	
+	public boolean bupdate(int bNo, String btitle, String bcontent, String bfile) {
+		String sql = "update board set btitle = ? , bcontent = ?, bfile=? where bno = ?";
+		try {
+			
+			ps = con.prepareStatement(sql);
+			ps.setString(1, btitle);
+			ps.setString(2, bcontent);
+			ps.setString(3, bfile);
+			ps.setInt(4, bNo);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("글 수정 등록 DB오류" + e);
+		}
+		
+		return false;
+	}
+	
+	
+	public int getTotalSize() {
+		int count = 0;
+		String sql = "select count(*) from board";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 전체 카운트 DB오류" + e);
+		}		
+		return count;
 	}
 }

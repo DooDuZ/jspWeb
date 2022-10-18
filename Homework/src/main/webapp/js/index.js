@@ -3,7 +3,7 @@
  */
  
 
-printboard();
+printboard(1);
 
 function addCon(){
 	let title = document.getElementById('cTitle').value;
@@ -25,28 +25,67 @@ function addCon(){
 	})	
 }
 
-
-function printboard(){
+function printboard(page){
 	$.ajax({
 		url : '/Homework/board/PrintBoard',
-		data : '',
 		success : (result)=>{
 			let contentList = JSON.parse(result);
+			let inverseList=[];			
+			for(let i = 0 ; i<contentList.length ; i++){
+				inverseList[i] = contentList[contentList.length-(i+1)];
+			}
+			contentList = inverseList;
 			
 			let boardlist = document.getElementById('boardlist');
 			let board = `<tr><th>글 번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th><th>비고</th></tr>`
-			for(let i = 0 ; i<contentList.length ; i++){
+			
+			let displayContent = 3;
+			let totalPage = contentList.length/displayContent;
+			if(contentList.length%displayContent!=0){
+				totalPage++;
+			}
+			
+			for(let i = (page-1)*3 ; i<page*3 ; i++){
+				if(i==contentList.length-1){
+					break;
+				}
 				board += `<tr id=${contentList[i].cNo}><td>${contentList[i].cNo}</td>
-						<td onclick="viewContent(${contentList[i].cNo})">${contentList[i].Title}</td>
+						<td onclick="viewContent(${contentList[i].cNo}, ${page})">${contentList[i].Title}</td>
 						<td>${contentList[i].Writer}</td>
 						<td>${contentList[i].Date}</td>
 						<td>${contentList[i].view}</td>
 						<td class="del_${contentList[i].cNo}"><button onclick="viewDelete(${contentList[i].cNo})">삭제하기</button></td>
 						</tr>`
-			}
+			}			
 			boardlist.innerHTML = board;
-		}		
-	})	
+			let btns = '';
+			if(page<=1){
+				btns+= `<button onclick="printboard(${page})">이전</button>`;
+			}else{
+				btns+=`<button onclick="printboard(${page-1})">이전</button>`;
+			}
+			
+			let btnbox = document.querySelector('#btnbox');
+			
+			let startPage = Math.floor(page/5)+1;
+			let endPage = startPage + 4;
+			
+			for(let i = startPage ; i<=endPage ; i++){
+				if(i>totalPage){
+					break;
+				}
+				btns += `<button onclick="printboard(${i})">${i}</button>`;
+			}
+			
+			if(page>=totalPage){
+				btns+= `<button onclick="printboard(${page})">다음</button>`;
+			}else{
+				btns+=`<button onclick="printboard(${page+1})">다음</button>`;	
+			}
+			btnbox.innerHTML = btns;
+		}	
+	})
+	 
 }
 
 
@@ -74,7 +113,7 @@ function deleteContent(i){
 	})
 }
 
-function viewContent(i){
+function viewContent(i, page){
 	let contitle = document.querySelector('.contitle');
 	let viewer = document.querySelector('.viewer');
 	$.ajax({
@@ -85,7 +124,7 @@ function viewContent(i){
 			contitle.innerHTML = data.title;
 			viewer.innerHTML = data.content;
 			viewComment(i);
-			printboard();
+			printboard(page);
 		}
 	})	
 }
@@ -187,8 +226,6 @@ function viewComment(i){
 			}			
 			console.log(extendslist);
 			
-			
-				---- 주석 풀거면 아래 반복문에 list~~ 이부분 바꿔야함
 				
 				
 			*/			
@@ -200,7 +237,7 @@ function viewComment(i){
 				output += `<ul id="row_${extendslist[i].cNo}"><li>
 							<span>${blank}</span>
 							<div>${extendslist[i].cNo}</div>
-							<div onclick="commentextends(${extendslist[i].cNo}, ${bNo})">${extendslist[i].cWriter}</div>
+							<div onclick="commentextends(${extendslist[i].cNo}, ${bNo}, ${extendslist[i].cWriter})">${extendslist[i].cWriter}</div>
 							<div>${extendslist[i].cContent}</div>
 							<div>${extendslist[i].cDate}</div>
 							<div>비밀번호 : <input type="password" id="del_${extendslist[i].cNo}"><button onclick="delComment(${extendslist[i].cNo},${bNo})">삭제</button></div>
@@ -209,10 +246,6 @@ function viewComment(i){
 			commentbox.innerHTML = output;
 		}
 	})
-}
-
-function addExtends(){
-	
 }
 
 
@@ -249,21 +282,21 @@ function delComment(i, bNo){
 	})
 }
 
-function commentextends(i, bNo){
+function commentextends(i, bNo, cWriter){
 	let extendsrow = document.querySelector(`#row_${i}`);
 	extendsrow.innerHTML += `<li id="row_${i}_child">
 					<div>작성자<input type="text" class="exadd"></div>
 					<div>비밀번호<input type="password" class="exadd"></div>
 					<div>내용<input type="text" class="exadd"></div>
-					<div><button onclick="addEx_comment(${i}, ${bNo})">등록</button></div>
+					<div><button onclick="addEx_comment(${i}, ${bNo}, ${cWriter})">등록</button></div>
 					</li>`;
 }
 
-function addEx_comment(cNo, bNo){
+function addEx_comment(cNo, bNo, cWriter){
 	let inputbox = document.querySelectorAll('.exadd');
 	let object = {'cWriter' : inputbox[0].value,
 					'cPassword' : inputbox[1].value,
-					'cContent' : inputbox[2].value,
+					'cContent' : `@${cWriter}`+inputbox[2].value,
 					'cNo' : cNo,
 					'bNo' : bNo
 				}	

@@ -29,8 +29,32 @@ public class list extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<writeDto> list = WriteDao.getInstance().getlist();
+		int listsize = Integer.parseInt(request.getParameter("listsize"));
 		
+		// 전체 게시물 수
+		int totalSize = WriteDao.getInstance().getTotalSize();
+		// 페이지 수 저장
+		int totalPage = totalSize/listsize;
+		if(totalSize%listsize!=0) {
+			totalPage++;
+		}		
+		
+		//현재 페이지 수 
+		int page = Integer.parseInt(request.getParameter("page"));
+		
+		int startRow = (page-1)*listsize;
+		
+		int btnsize = 5; // 버튼 5개씩 표시
+		int startbtn = 5*(page/5)+1;
+		int endbtn = startbtn+btnsize-1;
+		
+		if(endbtn > totalPage) {
+			endbtn = totalPage;
+		}
+		
+		ArrayList<writeDto> list = WriteDao.getInstance().getlist(startRow, listsize);
+		
+		JSONObject boards = new JSONObject();
 		JSONArray array = new JSONArray();
 		
 		for(int i = 0 ; i<list.size() ; i++) {
@@ -43,7 +67,14 @@ public class list extends HttpServlet {
 			
 			array.add(object);
 		}
+		
+		boards.put("totalPage", totalPage);
+		boards.put("data", array);
+		boards.put("startbtn", startbtn);
+		boards.put("endbtn", endbtn);
+		
+		
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().print(array);		
+		response.getWriter().print(boards);		
 	}
 }

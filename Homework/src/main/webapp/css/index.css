@@ -7,10 +7,15 @@
 a{color : black; text-decoration: none;}
 a hover{color : gray;}
 
+
+.section_write{width : 1000px; height : 300px; margin : 0 auto; }
+
+
 #boardList span{margin : 20px 40px; }
 
-section{display : flex; justify-content: center; align-items: center;}
-section ul{margin-top : 20px;}
+.boardlist{width : 1000px; height : 300px; margin : 0 auto; 
+	display : flex; flex-direction : column; justify-content: space-between; align-items: center; border : 1px solid black; }
+.boardlist ul{margin-top : 20px;}
 
 #contentbox{ width : 1000px; height : 400px ; margin : 0 auto;
 		border : 1px solid black;

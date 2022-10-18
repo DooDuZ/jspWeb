@@ -8,11 +8,8 @@
 		url : "/jspWeb/board/page",
 		success : (result)=>{
 			let data = JSON.parse(result);
-			
-			console.log(data.checkUser);
+
 			document.querySelector('#bnobox').innerHTML = data.bNo;
-			
-			console.log(data.bNo);
 			
 			document.querySelector('#idbox').innerHTML = data.mid;
 			document.querySelector('#titlebox').innerHTML = data.btitle;
@@ -20,7 +17,7 @@
 			
 			if(data.checkUser){
 				document.querySelector('#delbox').innerHTML = `<button onclick="deleteContent(${data.bNo})">삭제하기</button>
-															<button onclick="correctContent(${data.bNo})">수정하기</button>`;
+															<button><a href="/jspWeb/board/update.jsp">수정하기</a></button>`;
 			}
 			if(data.bfile!==null){
 				document.querySelector('#bfile').innerHTML = `<a href="/jspWeb/board/filedown?bfile=${data.bfile}">${data.bfile}</a>`;

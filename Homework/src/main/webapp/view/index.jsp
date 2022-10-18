@@ -17,18 +17,19 @@
 	<div class = "section_write">
 		<h3>글 작성 페이지 </h3>
 		<div>
-			제목 : <input type="text" id="cTitle"><br>
-			내용 : <textarea id="cContent"></textarea><br>
-			작성자 : <input type="text" id="cWriter"><br>
-			비밀번호 :  <input type="password" id="cPassword">
-			<button onclick="addCon()"> 글 등록 </button>
+			<div>제목 : <input type="text" id="cTitle"></div>
+			<div>내용 : <textarea id="cContent"></textarea></div>
+			<div>작성자 : <input type="text" id="cWriter"></div>
+			<div>비밀번호 :  <input type="password" id="cPassword"></div>
+			<div><button onclick="addCon()"> 글 등록 </button>
 		</div>
 	</div>
 	
-	<section>
+	<div class="boardlist">
 		<table id = "boardlist">
 		</table>
-	</section>
+		<div id="btnbox"></div>
+	</div>
 	<div id="contentbox">
 		<h3 class="contitle"></h3>
 		<div class="viewer"></div>
