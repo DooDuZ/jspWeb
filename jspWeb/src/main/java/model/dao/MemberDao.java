@@ -129,6 +129,23 @@ public class MemberDao extends Dao{
 		}
 		return dto;
 	}
+	
+	//getmNo
+	public int getMno(String mid) {
+		String sql = "select * from member where mid = ? ";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, mid);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}			
+		} catch (Exception e) {
+			System.out.println("mno호출 db오류"+e);
+		}
+		return 0;
+	}
+	
 	public ArrayList<MemberDto> getInfoList() {
 		ArrayList<MemberDto> list = new ArrayList<>();
 		String sql = "select * from member";

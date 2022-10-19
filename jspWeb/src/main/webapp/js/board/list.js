@@ -1,10 +1,26 @@
 /**
  * 
  */
+ 
+// 검색 처리
 let pageinfo = {
-	listsize : 3,
-	page : 1
+	listsize : document.querySelector('.listsize').value,
+	page : 1,
+	key : '',
+	keyword : ''
 };
+
+
+function bsearch(){
+	pageinfo.key = document.querySelector('.key').value;
+	pageinfo.keyword = document.querySelector('.keyword').value;
+	getlist(1);
+}
+ 
+function blistsize(){
+	pageinfo.listsize = document.querySelector('.listsize').value
+	getlist( 1 );
+}
 
 getlist(1);
  function getlist( i ){
@@ -17,9 +33,11 @@ getlist(1);
 		url : '/jspWeb/board/list',
 		data : pageinfo,
 		success : (result)=>{
+			console.log(result);
 			let json = JSON.parse(result);
 			let totalPage = json.totalPage;
 			let data = json.data
+			document.querySelector('.totalsize').innerHTML = json.totalsize;
 			let today = new Date().toISOString();
 			for(let i = 0 ; i<data.length ; i++){
 				if(data[i].bdate.substring(0,10) == today.substring(0,10)){
@@ -48,12 +66,13 @@ getlist(1);
 			
 			//번호버튼 
 			for(let i = 1; i<=totalPage; i++){
-				pagehtml += `<button type="button" onclick="getlist(${i})">${i}</button>`
+				pagehtml += `<button type="button" onclick="getlist(${i})">${i}</button>`;
 			}
+			
 			if(pageinfo.page>=totalPage){
 				pagehtml += `<button type="button" onclick="getlist(${pageinfo.page})">다음</button>`;
 			}else{
-				pagehtml += `<button type="button" onclick="getlist(${pageinfo.page+1}>다음</button>`;
+				pagehtml += `<button type="button" onclick="getlist(${pageinfo.page+1})">다음</button>`;
 			}
 			document.querySelector('.pagebox').innerHTML = pagehtml;
 		}

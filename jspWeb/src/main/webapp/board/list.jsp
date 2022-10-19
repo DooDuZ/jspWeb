@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link href="../css/page.css" rel = "stylesheet">
+
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
@@ -36,11 +38,34 @@
 				%>				
 		</table> --%>
 		
+		<div>게시물 수 : <span class="totalsize"></span></div>
+		<div>
+			<select class="listsize" onchange="blistsize()">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+			</select>
+		</div>
+		
 		<table id="boardlist" class="table">		
 		</table>
 		
 		<div class="pagebox"></div>
-			
+		
+		
+		
+		<div>
+			<select class="key">
+				<option value="btitle"> 제목 </option>
+				<option value="bcontent"> 내용 </option>
+				<option value="bwriter"> 작성자 </option>
+			</select>
+			<input type="text" placeholder="검색어" class="keyword">
+			<button type="button" onclick="bsearch()">검색</button>
+		</div>
+		
+		
 	</div>	
 	
 	

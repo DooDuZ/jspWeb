@@ -15,9 +15,6 @@ import org.json.simple.JSONObject;
 import model.dao.WriteDao;
 import model.dto.writeDto;
 
-/**
- * Servlet implementation class list
- */
 @WebServlet("/board/list")
 public class list extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,10 +26,16 @@ public class list extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
+		String key = request.getParameter("key");
+		String keyword = request.getParameter("keyword");
+		
+		
 		int listsize = Integer.parseInt(request.getParameter("listsize"));
 		
 		// 전체 게시물 수
-		int totalSize = WriteDao.getInstance().getTotalSize();
+		int totalSize = WriteDao.getInstance().getTotalSize( key, keyword);
 		// 페이지 수 저장
 		int totalPage = totalSize/listsize;
 		if(totalSize%listsize!=0) {
@@ -52,7 +55,10 @@ public class list extends HttpServlet {
 			endbtn = totalPage;
 		}
 		
-		ArrayList<writeDto> list = WriteDao.getInstance().getlist(startRow, listsize);
+		ArrayList<writeDto> list = WriteDao.getInstance().getlist(startRow, listsize, key, keyword);
+		
+		
+		
 		
 		JSONObject boards = new JSONObject();
 		JSONArray array = new JSONArray();
@@ -64,7 +70,6 @@ public class list extends HttpServlet {
 			object.put("bdate", list.get(i).getBdate());
 			object.put("bview", list.get(i).getBview());
 			object.put("mno", list.get(i).getMno());
-			
 			array.add(object);
 		}
 		
@@ -72,7 +77,7 @@ public class list extends HttpServlet {
 		boards.put("data", array);
 		boards.put("startbtn", startbtn);
 		boards.put("endbtn", endbtn);
-		
+		boards.put("totalsize", totalSize);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().print(boards);		

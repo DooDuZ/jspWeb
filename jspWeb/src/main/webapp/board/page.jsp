@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+	<link href="../css/page.css" rel="stylesheet">
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
@@ -33,7 +35,17 @@
 			<div id = "bfile">첨부파일</div>
 			<div id = "delbox"></div>
 		</div>	
+		<div class="replybox">
+			<textarea rows="" cols="" class="rcontent"></textarea>
+			<button type="button" onclick="rwrite()">댓글작성</button>	
+		</div>
+		
+		<div class="replylist">
+		</div>
 	</div>
+	
+	
+	
 	
 	<script src="../js/board/page.js"></script>
 </body>

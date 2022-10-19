@@ -2,6 +2,9 @@ package model.dao;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import model.dto.writeDto;
 
 public class WriteDao extends Dao {
@@ -41,13 +44,18 @@ public class WriteDao extends Dao {
 	}
 	
 	// 글 출력 
-	public ArrayList<writeDto> getlist(int startRow, int listSize) {
+	public ArrayList<writeDto> getlist(int startRow, int listSize, String key, String keyword) {
 		ArrayList<writeDto> list = new ArrayList<>();
-		String sql = "select b.*, m.mid from member m, board b where m.mno = b.mno order by b.bdate desc limit ?,?;";
+		String sql;
+		if(!key.equals("") && !keyword.equals("")) {
+			sql = "select b.*, m.mid from member m, board b where m.mno = b.mno and "+ key +" like '%"+ keyword +"%' order by b.bdate desc limit ?,?;";
+		}else {
+			sql = "select b.*, m.mid from member m, board b where m.mno = b.mno order by b.bdate desc limit ?,?;";
+		}
 		try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, startRow);
-			ps.setInt(2, listSize);
+			ps.setInt(2, listSize);			
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				writeDto dto = new writeDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), null);
@@ -116,7 +124,6 @@ public class WriteDao extends Dao {
 	public boolean bupdate(int bNo, String btitle, String bcontent, String bfile) {
 		String sql = "update board set btitle = ? , bcontent = ?, bfile=? where bno = ?";
 		try {
-			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, btitle);
 			ps.setString(2, bcontent);
@@ -131,19 +138,108 @@ public class WriteDao extends Dao {
 		return false;
 	}
 	
-	
-	public int getTotalSize() {
-		int count = 0;
-		String sql = "select count(*) from board";
+	// 게시물 전체 개수 리턴
+	public int getTotalSize(String key, String keyword) {
+		String sql;
+		
+		if(!key.equals("") && !keyword.equals("")) {
+			// 검색 있음
+			sql = "select count(*) from board where "+ key +" like '%"+keyword+"%';";
+		}else {
+			// 검색 없음
+			sql = "select count(*) from board";
+		}
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				count = rs.getInt(1);
+				return rs.getInt(1);
 			}
 		} catch (Exception e) {
 			System.out.println("게시물 전체 카운트 DB오류" + e);
 		}		
-		return count;
+		return 0;
 	}
+	
+	// 댓글등록
+	public boolean rwrite(String rcontent, int mno, int bno) {
+		String sql = "insert into reply ( rcontent, mno, bno ) values( ? , ? , ?);";
+		try {
+			ps= con.prepareStatement(sql);
+			ps.setString(1, rcontent);
+			ps.setInt(2, mno);
+			ps.setInt(3, bno);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("댓글등록 db 오류"+e);
+		}		
+		return false;
+	}
+	// 댓글등록 오버로딩 -> servlet에서 type변수를 통해 댓글/대댓글판단 후 실행
+	public boolean rwrite(String rcontent, int mno, int bno, int rno) {
+		String sql = "insert into reply ( rcontent, mno, bno, rindex ) values( ? , ? , ?, ? );";
+		try {
+			ps= con.prepareStatement(sql);
+			ps.setString(1, rcontent);
+			ps.setInt(2, mno);
+			ps.setInt(3, bno);
+			ps.setInt(4, rno);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("댓글등록 db 오류"+e);
+		}		
+		return false;
+	}
+	
+	// 댓글 출력
+	public JSONArray getrlist(int bno) {
+		JSONArray array = new JSONArray();
+		String sql = "select reply.rcontent, reply.rdate, member.mid, reply.rno, reply.rindex from reply, "
+				+ "member where reply.mno = member.mno and bno = ? and reply.rindex = 0 order by reply.rdate desc;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bno);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				JSONObject object = new JSONObject();
+				object.put("rcontent", rs.getString(1));
+				object.put("rdate", rs.getString(2));
+				object.put("mid", rs.getString(3));
+				object.put("rno", rs.getInt(4));
+				object.put("rindex", rs.getInt(5));
+				array.add(object);
+			}
+		} catch (Exception e) {
+			System.out.println("댓글 불러오기 DB 오류"+e);
+		}		
+		return array;
+	}
+	public JSONArray getrlist(int bno, int rindex) {
+		JSONArray array = new JSONArray();
+		String sql = "select reply.rcontent, reply.rdate, member.mid, reply.rno, reply.rindex from reply, "
+				+ "member where reply.mno = member.mno and bno = ? and reply.rindex = ? order by reply.rdate desc;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.setInt(2, rindex);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				JSONObject object = new JSONObject();
+				object.put("rcontent", rs.getString(1));
+				object.put("rdate", rs.getString(2));
+				object.put("mid", rs.getString(3));
+				object.put("rno", rs.getInt(4));
+				object.put("rindex", rs.getInt(5));
+				array.add(object);
+			}
+		} catch (Exception e) {
+			System.out.println("댓글 불러오기 DB 오류"+e);
+		}		
+		return array;
+	}
+	
+	
+	
 }
