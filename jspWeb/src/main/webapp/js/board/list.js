@@ -84,6 +84,7 @@ function viewload(i){
 	$.ajax({
 		url : '/jspWeb/board/pageLoad',
 		data : { "bno" : i },
+		type : 'POST',
 		success :()=>{
 			location.href = 'page.jsp';
 		}		
