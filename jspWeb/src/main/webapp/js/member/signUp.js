@@ -16,7 +16,6 @@
 
 let col = document.querySelectorAll('.col3');
 
-
 //아이콘
 let sicon = '<i class="fas fa-check-circle"></i>';
 let bicon = '<i class="fas fa-ban"></i>';
@@ -32,7 +31,7 @@ function midEvent(){
 			data : {"mid" : mid},
 			success : (result)=>{
 				if(result==='true'){
-					col[0].innerHTML = sicon + '사용 가능한 ID입니다.';
+					col[0].innerHTML = sicon;
 				}else if(result==='false'){
 					col[0].getElementById('midtd').innerHTML = bicon + '이미 사용중인 ID입니다.';
 				}
@@ -131,9 +130,6 @@ detailAddress.addEventListener('change', adresscheck);
 //회원가입 전송 확인
 function formsubmit(){
 	// 아이디~주소 유효성검사 결과 검토
-	
-	console.log(document.querySelector('#confirm1').checked)
-	console.log(document.querySelector('#confirm2').checked)
 	
 	for(let i = 0 ; i<=6 ; i++){
 		if(col[i].innerHTML !== sicon){

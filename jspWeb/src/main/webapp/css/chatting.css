@@ -1,3 +1,46 @@
 @charset "UTF-8";
 
 .timestamp{margin-left : 20px;}
+
+.contentbox{
+	background-color : #b2c7d9;
+	height : 700px;
+	width : 300px;
+	overflow-y : scroll;
+}
+
+.secontent{
+	text-align: right;
+}
+
+.secontent .content{
+	background-color: #ffeb33;
+}
+
+.content{
+	background-color: #ffffff;
+	border-radius: 10px;
+	padding : 10px;
+	max-width : 70%;
+	word-break : break-all;
+	/* 박스권 사이즈보다 텍스트가 더 길어지면 자동 줄바꿈 */
+	display : inline-block;
+	font-size: 12px;
+}
+
+.date {
+	font-size : 1px; margin : 5px 2px;	
+}
+
+.alarm{
+	width : 70%;
+	margin : 0 auto;
+	text-align: center;	
+	font-size : 5px;
+	padding : 2%;
+	background-color: #a9bdce;
+}
+
+.msgbox{resize: none;}
+
+.dropdown-menu{	overflow-y : scroll; }

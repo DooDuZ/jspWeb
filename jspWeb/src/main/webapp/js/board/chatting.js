@@ -46,29 +46,110 @@ if(mid !== 'null'){
 }
 
 // 2. 기능 구현 [ 1.서버 접속 2.연결 끊기 3.메시지 전송 4.메시지 받기]
-function onopen(e){alert('채팅방에 들어왔습니다.' + e);}
-function onclose(e){alert('채팅방을 나갑니다.' + e);}
+function onopen(e){}
+function onclose(e){}
 function send(){
 	let msg = {
+		type : 'msg' ,
 		content : document.querySelector('.msgbox').value,
-		from : mid,
-		date : new Date().toLocaleTimeString()
+		mid : mid,
+		date : new Date().toLocaleTimeString(),
+		img : '아가양.jpg'
 	}
 	websocket.send(JSON.stringify(msg));
 	document.querySelector('.msgbox').value = '';
 		// WebSocket 클래스의 함수 활용
 }
+
+function emosend( emoNo ){
+	let msg = {
+		type : 'emo' ,
+		content : emoNo,
+		mid : mid,
+		date : new Date().toLocaleTimeString(),
+		img : '아가양.jpg'
+	}
+	websocket.send(JSON.stringify(msg));
+}
+
+
+
 function onerror(e){
 	alert(e);
 }
 
 function onmessage(e){
-	let contentbox = document.querySelector('.contentbox')	
-	
 	let msg = JSON.parse(e.data);
 	
-	contentbox.innerHTML += `<div>${mid} : ${msg.content}<span class="timestamp">${msg.date}</span></div>`;
+	if(msg.type==='msg'){
+		if(msg.mid === mid){ // 본인 글이면
+			let html = document.querySelector('.contentbox').innerHTML;
+			html += `<div class="secontent my-3">
+						<span class="date">${msg.date}</span>
+						<span class="content">${msg.content}</span>
+						</div>`;
+			document.querySelector('.contentbox').innerHTML = html;
+		}else{ // 본인 글 아니면
+			let html = document.querySelector('.contentbox').innerHTML;
+			html += `<div class="row g-0 my-3">
+						<div class="col-sm-1 mx-2">
+							<img width="100%;" class="rounded-circle" alt="" src="/jspWeb/img/${msg.img}">
+						</div>
+						<div class="col-sm-9">
+							<div class="recontent">
+								<div class="name">${msg.mid}</div>
+								<span class="content">${msg.content}</span>
+								<span class="date">${msg.date}</span>
+							</div>
+						</div>
+					</div>`;
+			document.querySelector('.contentbox').innerHTML = html
+		}
+	}else if(msg.type==='emo'){
+		if(msg.mid === mid){ // 본인 글이면
+			let html = document.querySelector('.contentbox').innerHTML;
+			html += `<div class="secontent my-3">
+						<span class="date">${msg.date}</span>
+						<img src="/jspWeb/img/imoji/emo${msg.content}.gif" width="90px;">
+						</div>`;
+			document.querySelector('.contentbox').innerHTML = html;
+		}else{
+			let html = document.querySelector('.contentbox').innerHTML;
+			html += `<div class="row g-0 my-3">
+						<div class="col-sm-1 mx-2">
+							<img width="100%;" class="rounded-circle" alt="" src="/jspWeb/img/${msg.img}">
+						</div>
+						<div class="col-sm-9">
+							<div class="recontent">
+								<div class="name">${msg.mid}</div>
+								<img src="/jspWeb/img/imoji/emo${msg.content}.gif" width="90px;">
+								<span class="date">${msg.date}</span>
+							</div>
+						</div>
+					</div>`;
+			document.querySelector('.contentbox').innerHTML = html
+		}
+	}else if(msg.type==='alarm'){
+		let html = document.querySelector('.contentbox').innerHTML;
+		html += `<div class="alarm"><span>${msg.content}</span></div>`;
+		document.querySelector('.contentbox').innerHTML = html;
+	}
+	
+	// 스크롤 조작
+	document.querySelector('.contentbox').scrollTop = document.querySelector('.contentbox').scrollHeight;	
 }
+
+emoview() // 이모티콘 호출 
+function emoview(){ // 이모티콘 호출 함수 
+	let html ='';
+	for( let i = 1 ; i<=43 ; i++ ){
+		html +=  `<img src="/jspWeb/img/imoji/emo${i}.gif" width="70px" onclick="emosend(${i})">`;
+	}
+	document.querySelector('.dropdown-menu').innerHTML = html;
+}
+
+
+
 
 
 
