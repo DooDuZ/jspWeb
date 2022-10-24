@@ -22,7 +22,7 @@ public class chatting{
 	public JSONObject jsonAlarm(String content) throws IOException{
 		JSONObject object = new JSONObject();
 		object.put("type", "alarm");
-		object.put("content", content);	
+		object.put("content", content);
 		return object;
 	}
 	public void sendmsg(JSONObject object) throws IOException {

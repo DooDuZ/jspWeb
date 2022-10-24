@@ -14,7 +14,7 @@
 	* js에서 Client Socket 생성 / 서버 소켓(java)과 통신	
 	
 	* 소켓 생성
-		new WebSocket('ws'://IP주소/프로젝트명/서버경로)
+		new WebSocket('ws://IP주소/프로젝트명/서버경로')
 	
 
 */

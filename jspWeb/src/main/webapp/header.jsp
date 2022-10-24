@@ -56,7 +56,8 @@
 			<li><a href="#"> 슈즈 </a></li>
 			<li><a href="#"> 악세사리 </a></li>
 			<li><a href="#"> 1+1 이벤트 </a></li>
-			<li><a href="board/chatting.jsp"> 채팅방 </a></li>
+			<li><a href="/jspWeb/board/api.jsp"> 공공데이터 </a></li>
+			<li><a href="/jspWeb/board/chatting.jsp"> 채팅방 </a></li>
 			<li class="searchbox">
 				<span>
 					<input type="text">
