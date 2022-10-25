@@ -16,7 +16,7 @@
 	* 소켓 생성
 		new WebSocket('ws://IP주소/프로젝트명/서버경로')
 	
-
+	
 */
 
 let mid = document.querySelector('.mid').value;
@@ -34,12 +34,12 @@ function enterKey(){
 	// 
 let websocket = null; 
 if(mid !== 'null'){
-	websocket = new WebSocket('ws://localhost:8080/jspWeb/chatting/'+mid);	
+	websocket = new WebSocket('ws://localhost:8080/jspWeb/chatting/'+mid);
 	// 2에서 구현된 기능을 클라이언트 소켓에 대입
 	websocket.onopen = (e) => {onopen(e)};
 	websocket.onclose = (e) => {onclose(e)};
 	websocket.onmessage = (e) => {onmessage(e)};
-	websocket.onerror = (e)=>{onerror(e)}
+	websocket.onerror = (e)=>{onerror(e)};
 }else{
 	alert('로그인 후 이용해주세요.');
 	location.href = '../member/login.jsp';
@@ -147,22 +147,3 @@ function emoview(){ // 이모티콘 호출 함수
 	}
 	document.querySelector('.dropdown-menu').innerHTML = html;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

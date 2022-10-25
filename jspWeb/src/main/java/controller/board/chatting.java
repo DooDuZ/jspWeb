@@ -16,9 +16,7 @@ import javax.websocket.*;
 public class chatting{
 	// 서버 소켓에 들어온 클라이언트 소켓 명단 저장
 	public static Map<Session, String> clients = new Hashtable<>(); // 동기화 위해 ArrayList 대신 Vector 사용 -> hashtable로 변경
-	
-	
-	
+
 	public JSONObject jsonAlarm(String content) throws IOException{
 		JSONObject object = new JSONObject();
 		object.put("type", "alarm");
@@ -29,7 +27,7 @@ public class chatting{
 		for(Session s : clients.keySet()) {	// Map.keyset()메서드 : 맵에 저장된 모든 key 빼오기
 			s.getBasicRemote().sendText(object.toString());
 		}
-	}	
+	}
 	
 	@OnOpen
 	public void OnOpen( Session session, @PathParam("mid") String mid ) throws IOException { // @PathParam(경로상의 변수명) : 경로상의 변수 호출
