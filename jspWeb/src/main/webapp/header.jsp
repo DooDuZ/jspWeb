@@ -38,12 +38,16 @@
 				<% if(loginID==null){	%>
 					<li><a href="/jspWeb/member/login.jsp">로그인</a></li>
 					<li><a href="/jspWeb/member/signup.jsp">회원가입</a></li>
-				<%	}else{	%>
+				<%	}else if(loginID.equals("admin")){ %>
+					<li><a href="/jspWeb/admin/dashboard.jsp">관리자 페이지</a></li>
+					<li><a href="/jspWeb/member/logout.jsp">로그아웃</a></li>
+				<%}else{	%>
 					<li><%= loginID %></li>
 					<li><a href="/jspWeb/member/logout.jsp">로그아웃</a></li>
-				<%	} %>					
 					<li><a href="/jspWeb/member/info.jsp">마이쇼핑</a></li>
 					<li><a href="/jspWeb/board/list.jsp">고객센터</a></li>
+				<%	} %>
+					
 				</ul>
 			</div>
 		</div>
