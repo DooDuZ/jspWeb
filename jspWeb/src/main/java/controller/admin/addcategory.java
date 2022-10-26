@@ -30,6 +30,7 @@ public class addcategory extends HttpServlet {
 		JSONArray array = new JSONArray();
 		for(int i = 0 ; i<list.size(); i++) {
 			JSONObject object = new JSONObject();
+			object.put("pcno", list.get(i).getPcno());
 			object.put("pcname", list.get(i).getPcname());
 			array.add(object);
 		}		

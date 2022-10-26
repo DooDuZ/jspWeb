@@ -3,18 +3,11 @@
  */
  
  function throwdices(){
-	let dice1 = document.querySelector('.dice1');
-	let dice2 = document.querySelector('.dice2');
-	
 	let diceNum = Math.floor(Math.random()*6)+1;
 	let diceNum2 = Math.floor(Math.random()*6)+1;
-	
-	dice1.innerHTML = diceNum;
-	dice2.innerHTML = diceNum2;
-	
-	let object = { 
-		dice1 : diceNum,
-		dice2 : diceNum2		
+
+	let object = {
+		casting : `displaydice(${diceNum}, ${diceNum2})`
 	}
 	send(object);
 }
@@ -29,6 +22,16 @@
  
  function onopen(){}
  function onclose(){}
- function send(object){}
+ function send(object){ 
+	websocket.send(JSON.stringify(object));
+ }
  function onmessage(){}
  
+ function displaydice(diceNum, diceNum2){
+	let dice1 = document.querySelector('.dice1');
+	let dice2 = document.querySelector('.dice2');
+	
+	dice1.innerHTML = diceNum;
+	dice2.innerHTML = diceNum2;
+}
+

@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+*{margin : 0 ; padding :0; box-sizing: border-box;}
+	
+#tester{width : 500px; height : 500px; margin : 0 auto; border : 1px solid black;}
+
+.displayDice{display:flex; align-items: center; justify-content: center;}
+.dice1, .dice2{ width : 30px; height : 30px; margin : 20px; border : 1px solid black; font-size: 20px;}
+
+td{width : 30px; height : 30px; border : 1px solid black;}

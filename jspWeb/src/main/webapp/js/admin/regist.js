@@ -4,10 +4,10 @@
  
  function regist(){	
 	let form = document.querySelector('form');
-	let formdata = new FormData(form);	
+	let formdata = new FormData(form);
 	$.ajax({
 		url : '/jspWeb/admin/regist',
-		data : formdata ,
+		data : formdata,
 		// form 전송인 경우 아래 3가지 필수!!! -> 멀티파트 전송
 		type : 'POST',
 		processData : false,
@@ -64,7 +64,7 @@ function getpcategory(){
 			let datalist = JSON.parse(result);
 			let html = '';
 			for(let i = 0 ; i<datalist.length ; i++){
-				html += `<input type="radio" name="pcno">${datalist[i].pcname}`;
+				html += `<input type="radio" name="pcno" value="${datalist[i].pcno}">${datalist[i].pcname}`;
 			}
 			pcategorybox.innerHTML = html;
 		}

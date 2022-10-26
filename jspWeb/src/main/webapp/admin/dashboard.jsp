@@ -27,7 +27,7 @@
 		<h1>관리자 메뉴</h1>
 		<ul class="side_menu">
 			<li class="side_item"><span onclick="pagechange('regist.jsp')">제품 등록</span></li>
-			<li class="side_item"><span onclick="">제품 목록</span></li>
+			<li class="side_item"><span onclick="pagechange('list.jsp')">제품 목록</span></li>
 			<li class="side_item"><span onclick="">재고 관리</span></li>
 			<li class="side_item"><span onclick="">주문 관리</span></li>
 			<li class="side_item"><span onclick="">매출 관리</span></li>
