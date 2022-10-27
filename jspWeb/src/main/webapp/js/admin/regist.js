@@ -55,6 +55,7 @@ function pcategoryadd(){
 }
 
 // 카테고리 출력 함수
+
 getpcategory();
 function getpcategory(){
 	let pcategorybox = document.querySelector('.pcategorybox')
