@@ -17,8 +17,6 @@
 	<div class="container"> <!-- 부트스트랩 css에서 미리 만들어진 class 사용 -->
 		<div class="col-sm-6 offset-3 chattingbox">
 			<div class="row">
-				<div class="col-sm-4"></div> <!-- 접속 회원 목록 -->
-					
 				<div class="col-sm-8"> <!-- 채팅창 -->
 					<div class="contentbox my-3"></div>
 				
