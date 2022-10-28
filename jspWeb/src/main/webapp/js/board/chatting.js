@@ -36,7 +36,7 @@ let websocket = null;
 if(mid !== 'null'){
 	websocket = new WebSocket('ws://localhost:8080/jspWeb/chatting/'+mid);
 	// 2에서 구현된 기능을 클라이언트 소켓에 대입
-	websocket.onopen = (e) => {onopen(e)};
+	websocket.onopen = (e) => {onopen(e)} ;
 	websocket.onclose = (e) => {onclose(e)};
 	websocket.onmessage = (e) => {onmessage(e)};
 	websocket.onerror = (e)=>{onerror(e)};

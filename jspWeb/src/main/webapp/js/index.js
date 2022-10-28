@@ -10,10 +10,7 @@ function M_getplist(){
 			let json = JSON.parse(result);
 			let html = '';
 			json.forEach( p=> {
-				let disprice = Math.round(p.pprice / 10 * (1-p.pdiscount) * 10);				
-				let chars = [];
-				
-				
+				let disprice = Math.round(p.pprice / 10 * (1-p.pdiscount) * 10);
 				html += `<div class="item">
 							<div class="item_imgbox">
 								<a href="#">
