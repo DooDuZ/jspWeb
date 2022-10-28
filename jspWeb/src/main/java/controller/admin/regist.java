@@ -29,12 +29,14 @@ public class regist extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int type = Integer.parseInt(request.getParameter("type"));
-		
+		int type = Integer.parseInt(request.getParameter("type"));		
 		response.setCharacterEncoding("UTF-8");
 		
+		
+		
 		if(type==1) {
-			ArrayList<ProductDto> list = new ProductDao().getproductlist();
+			String option = request.getParameter("option");
+			ArrayList<ProductDto> list = new ProductDao().getproductlist(option);
 			JSONArray array = new JSONArray();
 			for(int i = 0 ; i<list.size() ; i++) {
 				JSONObject object = new JSONObject();

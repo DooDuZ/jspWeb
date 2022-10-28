@@ -6,7 +6,7 @@ function getproduct(){
 	let productlist = document.querySelector('.list')
 	$.ajax({
 		url : '/jspWeb/admin/regist',
-		data : {"type" : 1}, // 모든 제품 호출 타입 1
+		data : {'type' : 1, 'option' : 'all'}, // 모든 제품 호출 타입 1
 		success : (result)=>{
 			let datalist = JSON.parse(result);
 			let html = `<tr>
