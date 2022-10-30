@@ -11,7 +11,7 @@
 	
 	* 컴퓨터 네트워크를 경유하는 프로세스 간 통신의 종착점
 	* 소켓에 접속한 IP를 저장 / 접속한 PC간 실시간 통신
-	* js에서 Client Socket 생성 / 서버 소켓(java)과 통신	
+	* js에서 Client Socket 생성 / 서버 소켓(java)과 통신
 	
 	* 소켓 생성
 		new WebSocket('ws://IP주소/프로젝트명/서버경로')
@@ -36,7 +36,7 @@ let websocket = null;
 if(mid !== 'null'){
 	websocket = new WebSocket('ws://localhost:8080/jspWeb/chatting/'+mid);
 	// 2에서 구현된 기능을 클라이언트 소켓에 대입
-	websocket.onopen = (e) => {onopen(e)} ;
+	websocket.onopen = (e) => {onopen(e)};
 	websocket.onclose = (e) => {onclose(e)};
 	websocket.onmessage = (e) => {onmessage(e)};
 	websocket.onerror = (e)=>{onerror(e)};
