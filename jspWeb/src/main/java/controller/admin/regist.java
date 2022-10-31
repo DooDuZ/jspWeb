@@ -31,8 +31,7 @@ public class regist extends HttpServlet {
 		
 		int type = Integer.parseInt(request.getParameter("type"));		
 		response.setCharacterEncoding("UTF-8");
-		
-		
+
 		
 		if(type==1) {
 			String option = request.getParameter("option");
