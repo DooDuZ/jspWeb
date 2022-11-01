@@ -45,7 +45,7 @@ getproduct();
 					html += `<option value="${p.pno}"> ${p.pname} </option>`
 				}				
 			})
-			pselect.innerHTML += html;
+			pselect.innerHTML = html;
 		}
 	})	
 }

@@ -11,9 +11,10 @@ function M_getplist(){
 			let html = '';
 			json.forEach( p=> {
 				let disprice = Math.round(p.pprice / 10 * (1-p.pdiscount) * 10);
+				
 				html += `<div class="item">
 							<div class="item_imgbox">
-								<a href="#">
+								<a href="product/view.jsp?pno=${p.pno}">
 									<img src="/jspWeb/admin/pimg/${p.pimg}">
 								</a>
 							</div>

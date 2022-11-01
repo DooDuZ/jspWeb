@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/* 본문 폰트 프리텐다드 */
+@font-face {	
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container{ font-family : 'Pretendard-Regular'!important; }
+
+img{ width: 100%;}
+
+.infobox{
+	border-top : 1px solid black;
+	margin-left : 3%;
+}
+
+.pname{font-family: 'SDSamliphopangche_Outline'; margin-top : 5%;}
+
+.pcomment{font-size : 9px;}
+
+.pricebox{margin : 5% 0%;}
+
+.pdiscount{
+	font-family : 'KOTRAHOPE';
+	color : red; font-size : 20px;
+	padding-right : 3%;
+}
+
+.pprice{
+	text-decoration: line-through;
+	color: #999999;
+	padding-right : 3%;	
+}
+
+
+.psale{color:red; font-size : 20px; font-family: 'KOTRAHOPE';}
+.info_t{
+	margin : 5% 0%;
+	font-size : 15px;
+}
+
+select{
+	width : 60%;
+	height : 30px;
+	border : 1px solid #999999;
+}
+
+.select_t{ margin : 5% 0%;}
+
+.amount_btn{
+	display : block;
+	background-color: white;
+	font-size : 5px;
+	padding : 0px 4px;
+}
+
+.cancel_btn{
+	background-color: white;
+	font-size : 15px;
+	border : none;
+	padding : 3px;	
+}
+
+.pointbox{font-size : 8px; color:#999999;}
+.totalprice{
+	text-align: right;
+	font-size : 20px;
+	font-family: 'KOTRAHOPE';
+}
+
+.btnbox button{
+	background-color: white;
+	border:1px solid #999999;
+	width : 30%;
+	padding : 20px 10px;
+	margin-right : 2%;
+}
+
+
+
