@@ -54,7 +54,7 @@
 						<tr>
 							<td>색상</td>
 							<td>
-								<select class="sel_color">
+								<select class="cselect">
 									<option>[필수]색상 선택</option>
 								</select>
 							</td>
@@ -62,7 +62,7 @@
 						<tr>
 							<td>사이즈</td>
 							<td>
-								<select class="sel_size">
+								<select class="sselect">
 									<option>[필수]사이즈선택</option>
 								</select>
 							</td>
@@ -103,14 +103,14 @@
 					</table>
 					<div class="row">
 						<div class="col-md-6"> 총 상품금액 </div>
-						<div class="col-md-6 totalprice"> 40,000원 </div>
+						<div class="col-md-6 totalprice"></div>
 					</div>
 					
 					<!--  -->
 					<div class="btnbox">
 						<button>바로 구매</button>
 						<button>장바구니 담기</button>
-						<button> 찜하기 ♡ </button>
+						<button class="btnlike"> 찜하기<span class="btnheart">♡</span> </button>
 					</div>
 				</div>			
 			</div>
@@ -118,6 +118,6 @@
 		</div>
 		
 	</div>
-	<script src="../js/view.js"></script>
+	<script src="../js/product/productview.js"></script>
 </body>
 </html>

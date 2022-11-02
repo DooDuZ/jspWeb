@@ -23,7 +23,7 @@
 			if(json.discount == 0){
 				phtml += `<span class="psale">${json.pprice.toLocaleString}</span>`;
 			}else{
-				let discount = Math.floor((json.pprice * (1-json.pdiscount))/10)*10;		
+				let discount = Math.floor((json.pprice * (1-json.pdiscount))/10)*10;
 				
 				phtml += `<span class="pdiscount">${json.pdiscount*100}%</span>
 						<span class="pprice">${json.pprice}</span>

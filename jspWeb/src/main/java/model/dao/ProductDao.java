@@ -199,4 +199,33 @@ public class ProductDao extends Dao{
 		return false;
 	}
 	
+	
+	// 좋아요 등록
+	public int setplike(int pno, int mno) {
+		String sql = "select * from plike where pno = ? and mno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pno);
+			ps.setInt(2, mno);			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				sql = "delete from plike where pno = ? and mno =?";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, pno);
+				ps.setInt(2, mno);			
+				ps.executeUpdate();
+				return 0;
+			}else {
+				sql = "insert into plike values (null, ?, ?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, mno);
+				ps.setInt(2, pno);
+				ps.executeUpdate();
+				return 1;
+			}
+		} catch (Exception e) {
+			System.out.println("찜하기 DB오류"+e);
+		}	
+		return 3;
+	}
 }
