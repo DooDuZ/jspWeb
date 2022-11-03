@@ -68,7 +68,7 @@
 					<input type="text">
 					<a href=""><i class="fas fa-search"></i></a>
 				</span>
-				<a href=""><i class="fas fa-shopping-cart"></i></a>
+				<a href="/jspWeb/product/cart.jsp"><i class="fas fa-shopping-cart"></i></a>
 			</li>
 			
 		</ul>

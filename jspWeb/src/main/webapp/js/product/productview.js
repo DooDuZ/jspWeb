@@ -75,6 +75,32 @@ document.querySelector('.btnlike').addEventListener('click' , (e) => {
 	
 })
 
+// 장바구니 버튼을 눌렀을 때
+document.querySelector('.btncart').addEventListener('click', (e)=>{
+	if(productlist.length == 0){
+		alert('최소 1개 이상의 옵션을 선택해주세요.');
+	}
+	if(document.querySelector('.mid').value == 'null'){
+		alert('로그인 후 이용 가능');
+	}
+	$.ajax({
+		url: '/jspWeb/product/cart',
+		type : 'post',
+		data : {"data" : JSON.stringify(productlist), "pno" : pno},
+		success : (result) => {
+			console.log(result);
+			if(result==='true'){
+				productlist = [];
+				if(confirm('장바구니에 담았습니다. 장바구니 페이지로 이동할까요?')){
+					location.href = 'cart.jsp';
+				}else{
+					alert('장바구니 담기 실패');
+				}
+			}
+		}
+	})
+})
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // js 열람시 최초로 함수 1번 실행 

@@ -3,6 +3,9 @@ package model.dao;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
+import model.dto.CartDto;
 import model.dto.PcategoryDto;
 import model.dto.ProductDto;
 import model.dto.StockDto;
@@ -228,4 +231,54 @@ public class ProductDao extends Dao{
 		}	
 		return 3;
 	}
+	
+	// 장바구니 담기
+	public boolean setcart(int pno, String psize, int amount, String pcolor, int mno) {
+		 String sql = " insert into cart( amount , pstno , mno )"
+		    		+ " values (  "
+		    		+ "	"+amount+" ,"
+		    		+ "    (select pstno "
+		    		+ "	from productstock pst , (select psno from productsize where pno = "+pno+" and psize = '"+psize+"') sub"
+		    		+ "	where pst.psno = sub.psno and pcolor = '"+pcolor+"') ,"
+		    		+ "  "+mno+""
+		    		+ " );";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("장바구니 등록 DB오류"+e);
+		}
+		return false;
+	}
+	
+	// 12. 회원 번호의 모든 장바구니 호출
+	public ArrayList<CartDto> getCart(int mno){
+		ArrayList<CartDto> list = new ArrayList<>();
+		String sql = "select c.cartno, c.pstno, p.pname, p.pimg, p.pprice, p.pdiscount, pst.pcolor, ps.psize, c.amount from cart c natural join productstock pst natural join productsize ps natural join product p\r\n"
+				+ "    where c.mno=?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, mno);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				CartDto dto = new CartDto();
+				dto.setCartNo(rs.getInt(1));
+				dto.setPstno(rs.getInt(2));
+				dto.setPname(rs.getString(3));
+				dto.setPimg(rs.getString(4));
+				dto.setPprice(rs.getInt(5));;
+				dto.setPdiscount(rs.getDouble(6));
+				dto.setPcolor(rs.getString(7));
+				dto.setPsize(rs.getString(8));
+				dto.setAmount(rs.getInt(9));
+				list.add(dto);
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("카트 호출 DB 오류"+e);
+		}
+		return null;
+	}
+	
 }

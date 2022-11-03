@@ -11,7 +11,7 @@
 <body>
 
 	<%@include file = "../header.jsp" %>
-
+	<input type="text" value=<%=loginID %> class="mid" style="display : none;">
 	<%
 		// 경로상의 pno를 request
 			// get방식 개념 이해가 다시 필요할듯
@@ -108,9 +108,9 @@
 					
 					<!--  -->
 					<div class="btnbox">
-						<button>바로 구매</button>
-						<button>장바구니 담기</button>
-						<button class="btnlike"> 찜하기<span class="btnheart">♡</span> </button>
+						<button id="btn1">바로 구매</button>
+						<button id="btn2" class="btncart">장바구니 담기</button>
+						<button id="btn3" class="btnlike"> 찜하기<span class="btnheart">♡</span> </button>
 					</div>
 				</div>			
 			</div>
