@@ -1,7 +1,6 @@
 package controller.product;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import org.json.simple.parser.*;
 
 import model.dao.MemberDao;
 import model.dao.ProductDao;
-import model.dto.CartDto;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,28 +24,7 @@ public class cart extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int mno = MemberDao.getInstance().getMno( (String) request.getSession().getAttribute("mid"));
-		
-		ArrayList<CartDto> list = new ProductDao().getCart(mno);
-		
-		JSONArray array = new JSONArray();
-		
-		for(CartDto dto : list) {
-			JSONObject object = new JSONObject();
-			object.put("cartno", dto.getCartNo());
-			object.put("pstno", dto.getPstno());
-			object.put("pname", dto.getPname());
-			object.put("pimg", dto.getPimg());
-			object.put("pprice", dto.getPprice());
-			object.put("pdiscount", dto.getPdiscount());
-			object.put("pcolor", dto.getPcolor());
-			object.put("psize", dto.getPsize());
-			object.put("amount", dto.getAmount());
-			array.add(object);
-		}
-		
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().print(array);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,7 +34,7 @@ public class cart extends HttpServlet {
 		String data = request.getParameter("data");
 		try {
 			JSONParser parser = new JSONParser();
-			JSONArray array = (JSONArray) parser.parse(data);
+			JSONArray array = (JSONArray) parser.parse(data);			
 			for(int i = 0 ; i<array.size();i++) {
 				JSONObject object = (JSONObject) array.get(i);
 				String psize = (String)object.get("psize");
@@ -68,12 +45,10 @@ public class cart extends HttpServlet {
 				String pcolor = (String)object.get("pcolor");				
 				
 				boolean result = new ProductDao().setcart(pno, psize, amount, pcolor, mno);
-				System.out.println(result);
 				if(result == false) {
 					response.getWriter().print(result);
 					return;
 				}
-				response.getWriter().print(result);
 			}			
 		} catch (Exception e) {
 			System.out.println("JSON 파싱 오류" + e);

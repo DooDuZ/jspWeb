@@ -244,6 +244,10 @@ public class ProductDao extends Dao{
 		    		+ " );";
 		try {
 			ps = con.prepareStatement(sql);
+<<<<<<< HEAD
+=======
+			
+>>>>>>> branch 'master' of https://github.com/DooDuZ/jspWeb
 			ps.executeUpdate();
 			return true;
 		} catch (Exception e) {
