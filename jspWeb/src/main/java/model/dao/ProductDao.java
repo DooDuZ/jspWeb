@@ -3,8 +3,6 @@ package model.dao;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 import model.dto.CartDto;
 import model.dto.PcategoryDto;
 import model.dto.ProductDto;
