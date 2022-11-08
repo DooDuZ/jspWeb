@@ -30,10 +30,13 @@ public class pageLoad extends HttpServlet {
 				3. reqeust.getSession.invalidate() : 모든 세션 초기화
 				4. reqeust.getSession.invalidate() : 모든 세션 초기화
 			
-		*/
-		
+		*/		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("들오냐?");
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		
-		request.getSession().setAttribute("bno", bno);		
+		request.getSession().setAttribute("bno", bno);
+		response.getWriter().print(true);
 	}
 }

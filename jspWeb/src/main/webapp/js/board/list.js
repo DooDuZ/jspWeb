@@ -85,7 +85,7 @@ function viewload(i){
 		url : '/jspWeb/board/pageLoad',
 		data : { "bno" : i },
 		type : 'POST',
-		success :()=>{
+		success :(re)=>{
 			location.href = 'page.jsp';
 		}		
 	})

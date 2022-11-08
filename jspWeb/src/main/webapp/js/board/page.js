@@ -79,22 +79,20 @@ function rlist(){
 			let html = '';
 			for(let i = 0 ; i<replylist.length ; i++){
 				let reply = replylist[i];
-				
 				$.ajax({
 					url : "/jspWeb/reply/rlist",
 					data : {"type" : 1, "rno" : reply.rno},
 					async : false,
 					success :(result)=>{
 						let rereplylist = JSON.parse(result);
-						
 						html += `<div><span>${reply.mid}</span><span>${reply.rcontent}</span><span>${reply.rdate}</span>
 						<button type="button" onclick="rereplyview(${reply.rno})">답글</button>
-						<div id="reply${reply.rno}"></div>`;
+						<div id="reply${reply.rno}"></div><div class="rereplybox" style="display:none;" id="replybox${reply.rno}">`;
 						for(let j = 0 ; j<rereplylist.length; j++){
 							let rereply = rereplylist[j];
-							html += `<div class="rereplybox" style="display:none;" id="replybox${reply.rno}"><span>${rereply.mid}</span><span>${rereply.rcontent}</span><span>${rereply.rdate}</span></div>`;
+							html += `<span>${rereply.mid}</span><span>${rereply.rcontent}</span><span>${rereply.rdate}</span><br>`;
 						}						
-						html += `</div>`;
+						html += `</div></div>`;
 					}
 				})												
 			}			

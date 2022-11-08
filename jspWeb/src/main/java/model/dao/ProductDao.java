@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.dto.CartDto;
+import model.dto.OrderDto;
 import model.dto.PcategoryDto;
 import model.dto.ProductDto;
 import model.dto.StockDto;
@@ -280,4 +281,35 @@ public class ProductDao extends Dao{
 		return null;
 	}
 	
+	public boolean setOrder(ArrayList<OrderDto> list) {
+		System.out.println(list.get(0).toString());
+		String sql = "insert into porder values( null, ?, ?, ?, ?, now(), ? );";
+		try {
+			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, list.get(0).getOname());
+			ps.setString(2, list.get(0).getOphone());
+			ps.setString(3, list.get(0).getOaddress());
+			ps.setString(4, list.get(0).getOquest());
+			ps.setInt(5, list.get(0).getMno());
+			ps.executeUpdate();
+			
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				for(int i = 0 ; i<list.size(); i++) {
+					sql = "insert into porderdetail values(null, ?,?,?,?,?)";
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, list.get(i).getOdamount());
+					ps.setInt(2, list.get(i).getOdprice());
+					ps.setInt(3, list.get(i).getOdactive());
+					ps.setInt(4, list.get(i).getPstno());
+					ps.setInt(5, rs.getInt(1));
+					ps.executeUpdate();
+				}
+				return true;
+			}						
+		} catch (Exception e) {
+			System.out.println("오더등록 db오류"+e);
+		}		
+		return false;
+	}	
 }

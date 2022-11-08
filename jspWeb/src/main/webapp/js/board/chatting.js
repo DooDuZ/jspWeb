@@ -34,7 +34,7 @@ function enterKey(){
 	// 
 let websocket = null; 
 if(mid !== 'null'){
-	websocket = new WebSocket('ws://localhost:8080/jspWeb/chatting/'+mid);
+	websocket = new WebSocket('ws://192.168.17.70:8080/jspWeb/chatting/'+mid);
 	// 2에서 구현된 기능을 클라이언트 소켓에 대입
 	websocket.onopen = (e) => {onopen(e)};
 	websocket.onclose = (e) => {onclose(e)};

@@ -17,7 +17,7 @@ function findPW(){
 			}else{
 				alert("비밀번호 찾기 실패");
 			}			
-		}		
+		}
 	})	 
 }
  

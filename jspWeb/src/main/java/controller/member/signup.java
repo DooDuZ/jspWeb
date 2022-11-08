@@ -92,7 +92,7 @@ public class signup extends HttpServlet {
 		if(result) {
 			System.out.println("회원가입 성공");
 			// response.sendRedirect("URL") --> 페이지 응답
-			response.sendRedirect("http://localhost:8080/jspWeb/member/login.jsp"); 
+			response.sendRedirect("/jspWeb/member/login.jsp"); 
 		}else {
 			System.out.println("회원가입 실패");
 		}

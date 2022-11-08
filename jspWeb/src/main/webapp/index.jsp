@@ -44,7 +44,7 @@
 	<!-- 제품 출력 -->
 	<div class="container">
 		<h6 class="box_title"> CATEGORY BEST </h6>
-		<div class="itemlist">			
+		<div class="itemlist">
 		</div>
 	</div>
 	
